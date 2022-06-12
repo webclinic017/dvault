@@ -16,3 +16,5 @@ orders.csv
 charts
 dmule.egg-info
 .dmule_cmd_history
+.dvault_cmd_history
+dvault.egg-info/

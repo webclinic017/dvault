@@ -249,17 +249,17 @@ def _add_arg_helper(parser, arg_name):
                 lambda parser, arg_name: parser.add_argument(arg_name,
                 help="name of the portfolio"),
 
-            '--bot-name':
+            '--module-name':
                 lambda parser, arg_name: parser.add_argument(arg_name,
-                help="name of the bot"),
+                help="name of the module", required=True),
 
-            '--cmd-name':
+            '--entry-name':
                 lambda parser, arg_name: parser.add_argument(arg_name,
-                help="name of the cmd"),
+                help="name of the variable", required=True),
 
-            '--chart-name':
+            '--class-name':
                 lambda parser, arg_name: parser.add_argument(arg_name,
-                help="name of the chart"),
+                help="name of the class", required=True),
 
             '--tag-names':
                 lambda parser, arg_name: parser.add_argument(arg_name,

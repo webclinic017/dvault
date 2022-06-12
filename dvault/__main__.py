@@ -5,10 +5,12 @@ import os
 import sys
 import subprocess
 import inspect
+from pprint import pprint
 from shlex import quote
 from dvault.common_utils import (format_date, parse_date, add_cmd_line_args, append_cmd_history, list_from_strings)
 from dvault.log_msg import (LogMsg)
-from dvault import (bots, charts)
+# the following must be here for the module lookup by name to work
+from dvault import (bots, charts, accounts, strats, utils)
 
 def _call(dry_run, cmd):
     logging.info(LogMsg(" ".join([quote(str(x)) for x in cmd])))
@@ -26,7 +28,7 @@ def _get_class(
         ):
     # look up the class representing this bot by using the reflection
     # ability of python
-    objs_module = sys.modules[module_name]
+    objs_module = sys.modules[f"dvault.{module_name}"]
     obj_classes = inspect.getmembers(objs_module, inspect.isclass)
     obj_class = None
     all_names = []
@@ -49,29 +51,35 @@ def _run(
     if cmd_name:
         cmd = getattr(obj_class, cmd_name)
 
-        if run:
-            _check_call(dry_run, [str(x) for x in cmd])
+        is_nested_list = isinstance(cmd, list) and len(cmd) > 0 and isinstance(cmd[0], list)
+
+        if not is_nested_list:
+            cmd = [cmd]
         else:
-            print(" ".join([quote(str(x)) for x in cmd]))
+            logging.info(LogMsg(
+                "Treating as nested command list",
+                count=len(cmd)))
+
+        for cur_cmd in cmd:
+            if run:
+                _check_call(dry_run, [str(x) for x in cur_cmd])
+            else:
+                print(" ".join([quote(str(x)) for x in cur_cmd]))
     else:
         raise Exception(f"No actions to take with {bot_name}")
 
 def _dvault_main(
-        bot_name,
-        cmd_name,
-        chart_name,
+        module_name,
+        class_name,
+        entry_name,
         run,
         dry_run,
         **kwargs,
         ):
     logging.debug(LogMsg("dvault main enter"))
 
-    if bot_name:
-        bot_class = _get_class( bots.__name__, bot_name)
-        _run(bot_class, cmd_name, run, dry_run)
-    if chart_name:
-        chart_class = _get_class( charts.__name__, chart_name)
-        _run(chart_class, cmd_name, run, dry_run)
+    bot_class = _get_class( module_name, class_name)
+    _run(bot_class, entry_name, run, dry_run)
 
 
     logging.debug(LogMsg("dvault main exit"))
@@ -86,9 +94,9 @@ def main():
     add_cmd_line_args(
             parser,
             '--log-level',
-            '--bot-name',
-            '--cmd-name',
-            '--chart-name',
+            '--module-name',
+            '--class-name',
+            '--entry-name',
             '--dry-run',
             )
 

@@ -26,8 +26,14 @@ class dvine_chart_us_equity_3Pct:
         ]
 
 class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
-    entry_point = dvine_chart_all_returns.entry_point_base + dvine_chart_us_equity_3Pct.bot.strat.base_args + dvine_chart_us_equity_3Pct.base_args
+    entry_point = \
+            dvine_chart_all_returns.entry_point_base + \
+            dvine_chart_us_equity_3Pct.bot.strat.base_args + \
+            dvine_chart_us_equity_3Pct.base_args
 
 class dvine_us_equity_3Pct_recent_returns(dvine_chart_us_equity_3Pct):
-    entry_point = dvine_chart_all_returns.entry_point_base + dvine_chart_us_equity_3Pct.bot.strat.base_args + dvine_chart_us_equity_3Pct.base_args
+    entry_point = \
+            dvine_chart_recent_returns.entry_point_base + \
+            dvine_chart_us_equity_3Pct.bot.strat.base_args + \
+            dvine_chart_us_equity_3Pct.base_args
 
