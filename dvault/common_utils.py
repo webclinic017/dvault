@@ -255,7 +255,7 @@ def _add_arg_helper(parser, arg_name):
 
             '--entry-name':
                 lambda parser, arg_name: parser.add_argument(arg_name,
-                help="name of the variable", required=True),
+                help="name of the variable", default='entry_point'),
 
             '--class-name':
                 lambda parser, arg_name: parser.add_argument(arg_name,
