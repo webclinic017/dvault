@@ -44,13 +44,13 @@ def _get_class(
 
 def _run(
         obj_class,
-        cmd_name,
+        entry_name,
         run,
         dry_run,
         no_check):
 
-    if cmd_name:
-        cmd = getattr(obj_class, cmd_name)
+    if entry_name:
+        cmd = getattr(obj_class, entry_name)
 
         is_nested_list = isinstance(cmd, list) and len(cmd) > 0 and isinstance(cmd[0], list)
 
@@ -83,8 +83,19 @@ def _dvault_main(
         ):
     logging.debug(LogMsg("dvault main enter"))
 
-    bot_class = _get_class( module_name, class_name)
-    _run(bot_class, entry_name, run, dry_run, no_check)
+    # user specifies lists of modules, classes, and entry points
+    # iterate all that are specified and act upon them.
+    for cur_module_name in module_name:
+        for cur_class_name in class_name:
+            bot_class = _get_class( cur_module_name, cur_class_name)
+            for cur_entry_name in entry_name:
+                if len(module_name) > 1 or len(class_name) > 1 or len(entry_name) > 1:
+                    logging.info(LogMsg(
+                        "Running Entry",
+                        module_name=cur_module_name,
+                        class_name=cur_class_name,
+                        entry_name=cur_entry_name))
+                _run(bot_class, cur_entry_name, run, dry_run, no_check)
 
     logging.debug(LogMsg("dvault main exit"))
 
