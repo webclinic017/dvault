@@ -20,10 +20,12 @@ class dvine_chart_recent_returns:
 class dvine_chart_us_equity_3Pct:
     bot = bots.dvine_us_equity_3Pct
     discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1"
-    base_args = bot.strat.base_args + [
-        '--discord-webhook-url', discord_webhook_url,
-        '--bot-name', bot.__name__
-        ]
+    base_args = \
+            bot.strat.base_args + \
+            bot.alpaca_args + \
+            [
+                '--discord-webhook-url', discord_webhook_url,
+                '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
     entry_point = \
@@ -32,8 +34,5 @@ class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
             dvine_chart_us_equity_3Pct.base_args
 
 class dvine_us_equity_3Pct_recent_returns(dvine_chart_us_equity_3Pct):
-    entry_point = \
-            dvine_chart_recent_returns.entry_point_base + \
-            dvine_chart_us_equity_3Pct.bot.strat.base_args + \
-            dvine_chart_us_equity_3Pct.base_args
+    entry_point = dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_3Pct.base_args
 

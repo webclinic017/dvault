@@ -4,7 +4,7 @@ class Dvine:
     homepage = "https://github.com/AlwaysTraining/dvine"
     base_args = [
             "--alpaca-api-data-key", Alpaca.prime_time.api_key,
-            "--alpaca-secret-api-data-key", Alpaca.prime_time.api_secret_key ]
+            "--alpaca-secret-data-key", Alpaca.prime_time.api_secret_key ]
     default_args = base_args + [
             "--universe-name", "us_equity",
             "--log-level", "INFO",
