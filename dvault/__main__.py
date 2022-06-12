@@ -46,7 +46,8 @@ def _run(
         obj_class,
         cmd_name,
         run,
-        dry_run):
+        dry_run,
+        no_check):
 
     if cmd_name:
         cmd = getattr(obj_class, cmd_name)
