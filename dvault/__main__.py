@@ -62,7 +62,10 @@ def _run(
 
         for cur_cmd in cmd:
             if run:
-                _check_call(dry_run, [str(x) for x in cur_cmd])
+                if no_check:
+                    __call(dry_run, [str(x) for x in cur_cmd])
+                else:
+                    _check_call(dry_run, [str(x) for x in cur_cmd])
             else:
                 print(" ".join([quote(str(x)) for x in cur_cmd]))
     else:
@@ -74,13 +77,13 @@ def _dvault_main(
         entry_name,
         run,
         dry_run,
+        no_check,
         **kwargs,
         ):
     logging.debug(LogMsg("dvault main enter"))
 
     bot_class = _get_class( module_name, class_name)
-    _run(bot_class, entry_name, run, dry_run)
-
+    _run(bot_class, entry_name, run, dry_run, no_check)
 
     logging.debug(LogMsg("dvault main exit"))
 
@@ -90,6 +93,7 @@ def main():
     parser = argparse.ArgumentParser("vault is where you do configuration managment")
 
     parser.add_argument("--run", action='store_true', help="run a command as a subprocess")
+    parser.add_argument("--no-check", action='store_true', help="do not check for non zero exit codes")
 
     add_cmd_line_args(
             parser,
