@@ -1,7 +1,7 @@
 
 class dvault_update:
-    update_cmds = [
-            [ 'pip', 'uninstall', '-y', 'dvault' ],
-            [ 'pip', 'install', 'git+ssh://git@github.com/AlwaysTraining/dvault.git' ] ]
-    entry_point = update_cmds
+    uninstall_cmd = [ 'pip', 'uninstall', '-y', 'dvault' ],
+    install_cmd = [ 'pip', 'install', 'git+ssh://git@github.com/AlwaysTraining/dvault.git' ]
+    reinstall_cmds = [ uninstall, install ]
+    entry_point = reinstall_cmds
 
