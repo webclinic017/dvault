@@ -1,0 +1,2 @@
+# keeps down spam error messages when installing
+wheel
