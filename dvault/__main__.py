@@ -64,7 +64,7 @@ def _run(
         for cur_cmd in cmd:
             if run:
                 if no_check:
-                    __call(dry_run, [str(x) for x in cur_cmd])
+                    _call(dry_run, [str(x) for x in cur_cmd])
                 else:
                     _check_call(dry_run, [str(x) for x in cur_cmd])
             else:
