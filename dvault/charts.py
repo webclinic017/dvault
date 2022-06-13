@@ -14,7 +14,7 @@ class dvine_chart_all_returns:
 
 class dvine_chart_recent_returns:
     entry_point_base = dvine_chart_orders.entry_point_base + [
-            '--orders-max-spam', 5,
+            '--orders-max-spam', 2,
             '--orders-with-fill-after', 'now']
 
 class dvine_chart_us_equity_3Pct:
