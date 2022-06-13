@@ -7,6 +7,12 @@ class dvine_us_equity:
     entry_point_base = ["dvine"] + strat.default_args + [
             '--strategy-bet-size-usd', 100 ]
 
+    def get_alpaca_args(account):
+        return [ '--alpaca-base-url', account.base_url,
+                 '--alpaca-api-key', account.api_key,
+                 '--alpaca-secret-key', account.api_secret_key ]
+
+
 _DVINE_DAY_ARG_NAMES = [
         ( 1,200,50     ),
         ( 2,213,53     ),
@@ -65,10 +71,12 @@ _DVINE_DAYS = [
 
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
-    entry_point_base = dvine_us_equity.entry_point_base + [
+    alpaca_args = dvine_us_equity.get_alpaca_args(account)
+    entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--alpaca-base-url', account.base_url,
             '--nstd-thresh', 0.05 ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
+
 
 # one command for each tuple in the _DVINE_DAYS list
 dvine_us_equity_5Pct.compute_orders_cmds = [ dvine_us_equity_5Pct.entry_point_base + x for x in _DVINE_DAYS ]
@@ -76,10 +84,7 @@ dvine_us_equity_5Pct.compute_orders_cmds = [ dvine_us_equity_5Pct.entry_point_ba
 
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
-    alpaca_args = [
-            '--alpaca-base-url', account.base_url,
-            '--alpaca-api-key', account.api_key,
-            '--alpaca-secret-key', account.api_secret_key ]
+    alpaca_args = dvine_us_equity.get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.03 ]
     first_base = entry_point_base
