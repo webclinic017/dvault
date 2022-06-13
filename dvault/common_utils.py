@@ -272,12 +272,12 @@ def _add_arg_helper(parser, arg_name):
 
             }[arg_name](parser, arg_name)
 
-def list_from_strings(blacklist_ticker):
-    blacklist_tickers = []
-    for cur_ticker_arg in blacklist_ticker or []:
-        for cur_ticker in cur_ticker_arg.split(','):
-            blacklist_tickers.append(cur_ticker.strip())
-    return blacklist_tickers
+def list_from_strings(item_list):
+    flat_item_lists = []
+    for cur_thing_arg in item_list or []:
+        for cur_thing in split_string(cur_thing_arg):
+            flat_item_lists.append(cur_thing.strip())
+    return flat_item_lists
 
 
 def get_bar_span(

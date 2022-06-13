@@ -7,7 +7,8 @@ import subprocess
 import inspect
 from pprint import pprint
 from shlex import quote
-from dvault.common_utils import (format_date, parse_date, add_cmd_line_args, append_cmd_history, list_from_strings)
+from dvault.common_utils import (format_date, parse_date, add_cmd_line_args,
+        append_cmd_history, list_from_strings)
 from dvault.log_msg import (LogMsg)
 # the following must be here for the module lookup by name to work
 from dvault import (bots, charts, accounts, strats, utils)
@@ -72,6 +73,7 @@ def _run(
     else:
         raise Exception(f"No actions to take with {bot_name}")
 
+
 def _dvault_main(
         module_name,
         class_name,
@@ -82,6 +84,12 @@ def _dvault_main(
         **kwargs,
         ):
     logging.debug(LogMsg("dvault main enter"))
+
+    # we accept individual strings or quoted strings for these
+    # there by definition can not have spaces in them
+    module_name = list_from_strings(module_name)
+    class_name = list_from_strings(class_name)
+    entry_name = list_from_strings(entry_name)
 
     # user specifies lists of modules, classes, and entry points
     # iterate all that are specified and act upon them.
@@ -97,7 +105,7 @@ def _dvault_main(
                         entry_name=cur_entry_name))
                 _run(bot_class, cur_entry_name, run, dry_run, no_check)
 
-    logging.debug(LogMsg("dvault main exit"))
+    logging.info(LogMsg("dvault exiting"))
 
 
 
