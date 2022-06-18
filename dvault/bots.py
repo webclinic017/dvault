@@ -5,6 +5,7 @@ from dvault.accounts import (Alpaca)
 class dvine_us_equity:
     strat = Dvine
     entry_point_base = ["dvine"] + strat.default_args + [
+            '--log-level', 'INFO',
             '--strategy-bet-size-usd', 100 ]
 
     def get_alpaca_args(account):
