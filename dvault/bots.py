@@ -115,6 +115,3 @@ dvine_us_equity_3Pct.compute_orders_cmds = [
         dvine_us_equity_3Pct.rest_base  +  x for x in _DVINE_DAYS[1:26] ]
 
 
-
-
-

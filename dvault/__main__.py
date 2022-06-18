@@ -48,10 +48,18 @@ def _run(
         entry_name,
         run,
         dry_run,
-        no_check):
+        no_check,
+        passed_args
+        ):
 
     if entry_name:
-        cmd = getattr(obj_class, entry_name)
+        try:
+            cmd = getattr(obj_class, entry_name)
+        except AttributeError:
+            entries = [ x for x in obj_class.__dict__.keys() if not x.startswith("_") ]
+            entries = str(entries).replace("'","")
+            raise AttributeError(
+                    "Entry: '" + entry_name + "' not found in " + str(entries))
 
         is_nested_list = isinstance(cmd, list) and len(cmd) > 0 and isinstance(cmd[0], list)
 
@@ -65,11 +73,11 @@ def _run(
         for cur_cmd in cmd:
             if run:
                 if no_check:
-                    _call(dry_run, [str(x) for x in cur_cmd])
+                    _call(dry_run, [str(x) for x in cur_cmd+passed_args])
                 else:
-                    _check_call(dry_run, [str(x) for x in cur_cmd])
+                    _check_call(dry_run, [str(x) for x in cur_cmd+passed_args])
             else:
-                print(" ".join([quote(str(x)) for x in cur_cmd]))
+                print(" ".join([quote(str(x)) for x in cur_cmd+passed_args]))
     else:
         raise Exception(f"No actions to take with {bot_name}")
 
@@ -81,8 +89,11 @@ def _dvault_main(
         run,
         dry_run,
         no_check,
+        passed_args,
         **kwargs,
         ):
+    if passed_args[0] == "--":
+        passed_args = passed_args[1:]
     logging.debug(LogMsg("dvault main enter"))
 
     # we accept individual strings or quoted strings for these
@@ -103,7 +114,7 @@ def _dvault_main(
                         module_name=cur_module_name,
                         class_name=cur_class_name,
                         entry_name=cur_entry_name))
-                _run(bot_class, cur_entry_name, run, dry_run, no_check)
+                _run(bot_class, cur_entry_name, run, dry_run, no_check, passed_args)
 
     logging.info(LogMsg("dvault exiting"))
 
@@ -114,6 +125,7 @@ def main():
 
     parser.add_argument("--run", action='store_true', help="run a command as a subprocess")
     parser.add_argument("--no-check", action='store_true', help="do not check for non zero exit codes")
+    parser.add_argument("--passed-args",nargs="*", default=[], help="extra arguments")
 
     add_cmd_line_args(
             parser,
@@ -124,7 +136,9 @@ def main():
             '--dry-run',
             )
 
-    args = parser.parse_args()
+    args, passed_args = parser.parse_known_args()
+    args.passed_args += passed_args
+
     append_cmd_history(sys.argv)
     logging.basicConfig(
             level=getattr(logging, args.log_level.upper(), None),
