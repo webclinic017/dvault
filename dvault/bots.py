@@ -70,6 +70,19 @@ _DVINE_DAYS = [
         for i in range(len(_DVINE_DAY_ARG_NAMES))
         ]
 
+def _get_purge_args(purge_base, postfix_args=[]):
+
+    purge_orders_cmd = purge_base + ['--purge-type', 'orders']
+    purge_positions_cmd = purge_base + ['--purge-type', 'positions']
+    purge_sleep = ['sleep','2m']
+    purge_cmds = [
+            purge_orders_cmd + postfix_args,
+            purge_sleep,
+            purge_positions_cmd + postfix_args,
+            purge_sleep,
+            purge_positions_cmd + postfix_args ]
+    return purge_cmds
+
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
     alpaca_args = dvine_us_equity.get_alpaca_args(account)
@@ -77,6 +90,8 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--alpaca-base-url', account.base_url,
             '--nstd-thresh', 0.05 ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
+    purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
+    purge_cmds = _get_purge_args(purge_base)
 
 
 # one command for each tuple in the _DVINE_DAYS list
@@ -95,16 +110,7 @@ class dvine_us_equity_3Pct(dvine_us_equity):
             '--clear-persistence' ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
-    purge_orders_cmd = purge_base + ['--purge-type', 'orders']
-    purge_sleep = ['sleep','2m']
-    purge_positions_cmd = purge_base + ['--purge-type', 'positions']
-    postfix_args = ['--dry-run']
-    purge_cmds = [
-            purge_orders_cmd + postfix_args,
-            purge_sleep,
-            purge_positions_cmd + postfix_args,
-            purge_sleep,
-            purge_positions_cmd + postfix_args ]
+    purge_cmds = _get_purge_args(purge_base)
 
 
 # The first command runs daily in the traditional sense with persistence
