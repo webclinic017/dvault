@@ -92,7 +92,7 @@ def _dvault_main(
         passed_args,
         **kwargs,
         ):
-    if passed_args[0] == "--":
+    if len(passed_args) and passed_args[0] == "--":
         passed_args = passed_args[1:]
     logging.debug(LogMsg("dvault main enter"))
 
