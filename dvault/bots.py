@@ -97,12 +97,13 @@ class dvine_us_equity_3Pct(dvine_us_equity):
     purge_orders_cmd = purge_base + ['--purge-type', 'orders']
     purge_sleep = ['sleep','2m']
     purge_positions_cmd = purge_base + ['--purge-type', 'positions']
+    postfix_args = ['--dry-run']
     purge_cmds = [
-            purge_orders_cmd,
+            purge_orders_cmd + postfix_args,
             purge_sleep,
-            purge_positions_cmd,
+            purge_positions_cmd + postfix_args,
             purge_sleep,
-            purge_positions_cmd ]
+            purge_positions_cmd + postfix_args ]
 
 
 # The first command runs daily in the traditional sense with persistence
