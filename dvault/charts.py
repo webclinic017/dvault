@@ -73,7 +73,7 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url):
             f'/tmp/{name}.png',
             f'/tmp/{name}.json' ]
 
-    return [gen_chart, notify, cleanup]
+    return [gen_chart, notify ] #, cleanup]
 
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
