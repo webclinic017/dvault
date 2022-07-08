@@ -64,7 +64,6 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url):
     gen_chart = base_args + [
                 '--plot-file', f'/tmp/{name}.png',
                 '--output-file-list', f'/tmp/{name}.json' ]
-            ]
 
     notify = [ 'dsquire',
             '--embed-file-list', f'/tmp/{name}.json',
