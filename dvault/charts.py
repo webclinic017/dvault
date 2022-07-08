@@ -29,7 +29,7 @@ class dvine_chart_us_equity_3Pct:
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--discord-webhook-url', discord_webhook_url,
+#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
                 '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
@@ -56,7 +56,7 @@ class dvine_chart_us_equity_5Pct:
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--discord-webhook-url', discord_webhook_url,
+#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
                 '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
