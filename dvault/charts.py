@@ -86,13 +86,13 @@ class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
 
 class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_all_returns',
+            'dvine_us_equity_5Pct_recent_returns',
             dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_5Pct.base_args,
             dvine_chart_us_equity_5Pct.discord_webhook_url)
 
 class dvine_us_equity_5Pct_performance(dvine_chart_accounts):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_all_returns',
+            'dvine_us_equity_5Pct_performance',
             dvine_chart_accounts.entry_point_base +
                 dvine_chart_us_equity_5Pct.bot.strat.base_args +
                 dvine_chart_us_equity_5Pct.base_args + [
