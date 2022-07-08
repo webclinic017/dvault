@@ -70,7 +70,7 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url):
             '--discord-webhook-url', discord_webhook_url ]
 
     cleanup = [ 'rm', '-f',
-            f'/tmp/{name}.png' ]
+            f'/tmp/{name}.png',
             f'/tmp/{name}.json' ]
 
     return [gen_chart, notify, cleanup]
