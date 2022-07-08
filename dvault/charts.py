@@ -38,6 +38,8 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url):
 
     return [gen_chart, notify ] #, cleanup]
 
+## us_equity universe, 3% std dev filter
+
 class dvine_chart_us_equity_3Pct:
     bot = bots.dvine_us_equity_3Pct
     discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1"
@@ -65,13 +67,16 @@ class dvine_us_equity_3Pct_recent_returns(dvine_chart_us_equity_3Pct):
 
 class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_performance',
+            'dvine_us_equity_3Pct_performance',
             dvine_chart_accounts.entry_point_base +
-                dvine_chart_us_equity_5Pct.bot.strat.base_args +
-                dvine_chart_us_equity_5Pct.base_args + [
+                dvine_chart_us_equity_3Pct.bot.strat.base_args +
+                dvine_chart_us_equity_3Pct.base_args + [
                     '--from-date', '2022-06-08T00:00:00',
                     '--accounts-floor', 75000.00],
-            dvine_chart_us_equity_5Pct.discord_webhook_url)
+            dvine_chart_us_equity_3Pct.discord_webhook_url)
+
+
+## us_equity universe, 5% std dev filter
 
 class dvine_chart_us_equity_5Pct:
     bot = bots.dvine_us_equity_5Pct
