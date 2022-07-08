@@ -30,7 +30,7 @@ class dvine_chart_us_equity_3Pct:
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--plot-file', '/tmp/dvine_chart_us_equity_3Pct.png'
+                '--plot-file', '/tmp/dvine_chart_us_equity_3Pct.png',
                 '--output-file-list', '/tmp/dvine_chart_us_equity_3Pct.json',
                 '--bot-name', bot.__name__ ]
 
