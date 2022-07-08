@@ -70,7 +70,7 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
                 dvine_chart_us_equity_5Pct.bot.strat.base_args +
                 dvine_chart_us_equity_5Pct.base_args + [
                     '--from-date', '2022-06-08T00:00:00',
-                    '--accounts-floor', 75000.00]
+                    '--accounts-floor', 75000.00],
             dvine_chart_us_equity_5Pct.discord_webhook_url)
 
 class dvine_chart_us_equity_5Pct:
