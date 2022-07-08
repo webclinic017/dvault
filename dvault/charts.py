@@ -24,12 +24,14 @@ class dvine_chart_recent_returns:
 
 class dvine_chart_us_equity_3Pct:
     bot = bots.dvine_us_equity_3Pct
-    discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1"
+#    discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1"
+#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
+                '--plot-file', '/tmp/dvine_chart_us_equity_3Pct.png'
+                '--output-file-list', '/tmp/dvine_chart_us_equity_3Pct.json',
                 '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
@@ -51,12 +53,14 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
 
 class dvine_chart_us_equity_5Pct:
     bot = bots.dvine_us_equity_5Pct
-    discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
+#    discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
+#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
+                '--plot-file', '/tmp/dvine_chart_us_equity_5Pct.png',
+                '--output-file-list', '/tmp/dvine_chart_us_equity_5Pct.json',
                 '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
