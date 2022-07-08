@@ -16,7 +16,9 @@ from dvault import (bots, charts, accounts, strats, utils)
 def _call(dry_run, cmd):
     logging.info(LogMsg(" ".join([quote(str(x)) for x in cmd])))
     if not dry_run:
+        logging.debug(LogMsg("begin subprocess.call"))
         subprocess.call(cmd)
+        logging.debug(LogMsg("end subprocess.call"))
 
 def _check_call(dry_run, cmd):
     logging.info(LogMsg(" ".join([quote(str(x)) for x in cmd])))
