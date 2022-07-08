@@ -60,6 +60,23 @@ class dvine_chart_us_equity_5Pct:
             [
                 '--bot-name', bot.__name__ ]
 
+def _get_chart_cmd_series(name, base_args, discord_webhook_url):
+    gen_chart = base_args + [
+                '--plot-file', f'/tmp/{name}.png',
+                '--output-file-list', f'/tmp/{name}.json' ]
+            ]
+
+    notify = [ 'dsquire',
+            '--embed-file-list', f'/tmp/{name}.json',
+            '--discord-webhook-url', discord_webhook_url ]
+
+    cleanup = [ 'rm',
+            f'/tmp/{name}.png',
+            f'/tmp/{name}.json' ]
+
+    return [gen_chart, notify, cleanup]
+
+
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
     gen_chart = \
             dvine_chart_all_returns.entry_point_base + \
@@ -75,7 +92,13 @@ class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
             '/tmp/dvine_us_equity_5Pct_all_returns.png',
             '/tmp/dvine_us_equity_5Pct_all_returns.json' ]
 
-    entry_point = [gen_chart, notify, cleanup]
+    entry_point = _get_chart_cmd_series(
+            'dvine_us_equity_5Pct_all_returns',
+            dvine_chart_all_returns.entry_point_base +
+                dvine_chart_us_equity_5Pct.bot.strat.base_args +
+                dvine_chart_us_equity_5Pct.base_args,
+            dvine_chart_us_equity_5Pct.discord_webhook_url)
+
 
 class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
     entry_point = dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_5Pct.base_args
