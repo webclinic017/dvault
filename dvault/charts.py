@@ -53,21 +53,29 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
 
 class dvine_chart_us_equity_5Pct:
     bot = bots.dvine_us_equity_5Pct
-#    discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
-#               '--discord-webhook-url', discord_webhook_url,   # TODO, fix discord posting
+    discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--plot-file', '/tmp/dvine_chart_us_equity_5Pct.png',
-                '--output-file-list', '/tmp/dvine_chart_us_equity_5Pct.json',
                 '--bot-name', bot.__name__ ]
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
-    entry_point = \
+    gen_chart = \
             dvine_chart_all_returns.entry_point_base + \
             dvine_chart_us_equity_5Pct.bot.strat.base_args + \
-            dvine_chart_us_equity_5Pct.base_args
+            dvine_chart_us_equity_5Pct.base_args + [
+                '--plot-file', '/tmp/dvine_us_equity_5Pct_all_returns.png',
+                '--output-file-list', '/tmp/dvine_us_equity_5Pct_all_returns.json' ]
+    notify = [ 'dsquire',
+            '--embed-file-list', '/tmp/dvine_us_equity_5Pct_all_returns.json',
+            '--discord-webhook-url', dvine_chart_us_equity_5Pct.discord_webhook_url ]
+
+    cleanup = [ 'rm',
+            '/tmp/dvine_us_equity_5Pct_all_returns.png',
+            '/tmp/dvine_us_equity_5Pct_all_returns.json' ]
+
+    entry_point = [gen_chart, notify, cleanup]
 
 class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
     entry_point = dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_5Pct.base_args
