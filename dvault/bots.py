@@ -1,17 +1,18 @@
 import itertools
-from dvault.strats import (Dvine)
+from dvault.strats import (Dvine, Dmoon)
 from dvault.accounts import (Alpaca)
+
+def _get_alpaca_args(account):
+    return [ '--alpaca-base-url', account.base_url,
+             '--alpaca-api-key', account.api_key,
+             '--alpaca-secret-key', account.api_secret_key ]
+
 
 class dvine_us_equity:
     strat = Dvine
     entry_point_base = ["dvine"] + strat.default_args + [
             '--log-level', 'INFO',
             '--strategy-bet-size-usd', 100 ]
-
-    def get_alpaca_args(account):
-        return [ '--alpaca-base-url', account.base_url,
-                 '--alpaca-api-key', account.api_key,
-                 '--alpaca-secret-key', account.api_secret_key ]
 
 
 _DVINE_DAY_ARG_NAMES = [
@@ -85,7 +86,7 @@ def _get_purge_args(purge_base, postfix_args=[]):
 
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
-    alpaca_args = dvine_us_equity.get_alpaca_args(account)
+    alpaca_args = _get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--alpaca-base-url', account.base_url,
             '--nstd-thresh', 0.05 ]
@@ -100,7 +101,7 @@ dvine_us_equity_5Pct.compute_orders_cmds = [ dvine_us_equity_5Pct.entry_point_ba
 
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
-    alpaca_args = dvine_us_equity.get_alpaca_args(account)
+    alpaca_args = _get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.03 ]
     first_base = entry_point_base
@@ -123,3 +124,12 @@ dvine_us_equity_3Pct.compute_orders_cmds = [
         dvine_us_equity_3Pct.rest_base  +  x for x in _DVINE_DAYS[1:26] ]
 
 
+class dmoon:
+    strat = Dmoon
+    entry_point_base = ["dmoon"] + strat.default_args + []
+
+class dmoon_adhoc(dmoon):
+    account = Alpaca.play_time
+    alpaca_args = _get_alpaca_args(account)
+    entry_point_base = dmoon.entry_point_base + alpaca_args + [ ]
+    entry_point = entry_point_base
