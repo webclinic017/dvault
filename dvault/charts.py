@@ -43,6 +43,8 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url):
 class dvine_chart_us_equity_3Pct:
     bot = bots.dvine_us_equity_3Pct
     discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1"
+    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \
@@ -56,7 +58,8 @@ class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
             'dvine_us_equity_3Pct_all_returns',
             dvine_chart_all_returns.entry_point_base +
                 dvine_chart_us_equity_3Pct.bot.strat.base_args +
-                dvine_chart_us_equity_3Pct.base_args,
+                dvine_chart_us_equity_3Pct.base_args +
+                dvine_chart_us_equity_3Pct.from_date_args,
             dvine_chart_us_equity_3Pct.discord_webhook_url)
 
 class dvine_us_equity_3Pct_recent_returns(dvine_chart_us_equity_3Pct):
@@ -70,8 +73,8 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
             'dvine_us_equity_3Pct_performance',
             dvine_chart_accounts.entry_point_base +
                 dvine_chart_us_equity_3Pct.bot.strat.base_args +
-                dvine_chart_us_equity_3Pct.base_args + [
-                    '--from-date', '2022-06-08T00:00:00',
+                dvine_chart_us_equity_3Pct.base_args +
+                dvine_chart_us_equity_3Pct.from_date_args + [
                     '--accounts-floor', 75000.00],
             dvine_chart_us_equity_3Pct.discord_webhook_url)
 
@@ -86,6 +89,7 @@ class dvine_chart_us_equity_5Pct:
             bot.alpaca_args + \
             [
                 '--bot-name', bot.__name__ ]
+    from_date_args = ['--from-date', '2022-05-27T00:00:00']
 
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
@@ -93,7 +97,8 @@ class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
             'dvine_us_equity_5Pct_all_returns',
             dvine_chart_all_returns.entry_point_base +
                 dvine_chart_us_equity_5Pct.bot.strat.base_args +
-                dvine_chart_us_equity_5Pct.base_args,
+                dvine_chart_us_equity_5Pct.base_args +
+                dvine_chart_us_equity_5Pct.from_date_args,
             dvine_chart_us_equity_5Pct.discord_webhook_url)
 
 class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
@@ -107,7 +112,7 @@ class dvine_us_equity_5Pct_performance(dvine_chart_accounts):
             'dvine_us_equity_5Pct_performance',
             dvine_chart_accounts.entry_point_base +
                 dvine_chart_us_equity_5Pct.bot.strat.base_args +
-                dvine_chart_us_equity_5Pct.base_args + [
-                        '--from-date', '2022-05-27T00:00:00',
+                dvine_chart_us_equity_5Pct.base_args +
+                dvine_chart_us_equity_5Pct.from_date_args + [
                         '--accounts-floor', 92500.00],
             dvine_chart_us_equity_5Pct.discord_webhook_url)
