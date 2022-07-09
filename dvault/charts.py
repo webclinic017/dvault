@@ -88,8 +88,7 @@ class dvine_chart_us_equity_5Pct:
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--bot-name', bot.__name__ ,
-                '--log-level', 'DEBUG', ]
+                '--bot-name', bot.__name__ ]
     from_date_args = ['--from-date', '2022-05-27T00:00:00']
 
 
