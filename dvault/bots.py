@@ -138,4 +138,5 @@ class dmoon_adhoc(dmoon):
 class dmoon_adhoc_10s(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + [
             '--period-span-value', 10.0,
-            '--period-span-units', 'Sec' ]
+            '--period-span-units', 'Sec',
+            '--bot-name', 'dmoon_adhoc_10s']
