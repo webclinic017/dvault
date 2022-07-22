@@ -131,5 +131,11 @@ class dmoon:
 class dmoon_adhoc(dmoon):
     account = Alpaca.play_time
     alpaca_args = _get_alpaca_args(account)
-    entry_point_base = dmoon.entry_point_base + alpaca_args + [ ]
+    entry_point_base = dmoon.entry_point_base + alpaca_args + [
+            '--universe-name', 'crypto']
     entry_point = entry_point_base
+
+class dmoon_adhoc_10s(dmoon_adhoc):
+    entry_point = dmoon_adhoc.entry_point_base + [
+            '--period-span-value', 10.0,
+            '--period-span-units', 'Sec' ]
