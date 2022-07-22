@@ -49,8 +49,8 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url, gen_args=[]):
 class dvine_chart_us_equity_3Pct:
     tmp_dir = path.join('/tmp', 'dvine_chart_us_equity_3Pct' + ''.join(random.choice(string.digits) for i in range(5)) )
     bot = bots.dvine_us_equity_3Pct
-    discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
-    #discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1" # to dvine channel on dstock server
+    @discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
+    discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1" # to dvine channel on dstock server
     from_date_args = ['--from-date', '2022-06-08T00:00:00']
 
     base_args = \
@@ -68,17 +68,13 @@ class dvine_us_equity_3Pct_all_returns(dvine_chart_us_equity_3Pct):
                 dvine_chart_us_equity_3Pct.bot.strat.base_args +
                 dvine_chart_us_equity_3Pct.base_args +
                 dvine_chart_us_equity_3Pct.from_date_args,
-            dvine_chart_us_equity_3Pct.discord_webhook_url,
-            []
-            )
+            dvine_chart_us_equity_3Pct.discord_webhook_url)
 
 class dvine_us_equity_3Pct_recent_returns(dvine_chart_us_equity_3Pct):
     entry_point = _get_chart_cmd_series(
             'dvine_us_equity_3Pct_recent_returns',
             dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_3Pct.base_args,
-            dvine_chart_us_equity_3Pct.discord_webhook_url,
-            []
-            )
+            dvine_chart_us_equity_3Pct.discord_webhook_url)
 
 class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
     entry_point = _get_chart_cmd_series(
@@ -117,8 +113,7 @@ class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
     entry_point = _get_chart_cmd_series(
             'dvine_us_equity_5Pct_recent_returns',
             dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_5Pct.base_args,
-            dvine_chart_us_equity_5Pct.discord_webhook_url
-            )
+            dvine_chart_us_equity_5Pct.discord_webhook_url)
 
 class dvine_us_equity_5Pct_performance(dvine_chart_accounts):
     entry_point = _get_chart_cmd_series(
