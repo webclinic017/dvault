@@ -139,6 +139,16 @@ class dmoon_adhoc(dmoon):
             '--discord-webhook-url', discord_webhook_url]
     entry_point = entry_point_base
 
+class dmoon_adhoc_3s(dmoon_adhoc):
+    entry_point = dmoon_adhoc.entry_point_base + [
+            '--period-span-value', 10.0,
+            '--period-span-units', 'Sec',
+            '--bot-name', 'dmoon_adhoc_10s',
+            '--strategy-bet-size-usd', 2000,
+            '--entry-signal-look-back-periods', 3,
+            '--exit-signal-look-back-periods', 2 ]
+
+
 class dmoon_adhoc_10s(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + [
             '--period-span-value', 10.0,
