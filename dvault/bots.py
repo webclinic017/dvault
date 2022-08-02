@@ -31,10 +31,20 @@ _DVINE_DAY_ARG_NAMES = [
         ( 13,286,71    ),
         ( 14,293,73    ),
         ( 15,300,75    ),
+        ( 16,307,77    ),
+        ( 17,313,78    ),
         ( 18,320,80    ),
+        ( 19,327,82    ),
+        ( 20,333,83    ),
         ( 21,340,85    ),
+        ( 22,347,87    ),
+        ( 23,353,88    ),
         ( 24,360,90    ),
+        ( 25,367,92    ),
+        ( 26,373,93    ),
         ( 27,380,95    ),
+        ( 28,387,97    ),
+        ( 29,393,98    ),
         ( 30,400,100   ),
         ( 33,419,104   ),
         ( 36,439,109   ),
@@ -123,7 +133,25 @@ class dvine_us_equity_3Pct(dvine_us_equity):
 # --bar-shift-multiplier's
 dvine_us_equity_3Pct.compute_orders_cmds = [
         dvine_us_equity_3Pct.first_base + _DVINE_DAYS[0]] + [
-        dvine_us_equity_3Pct.rest_base  +  x for x in _DVINE_DAYS[1:26] ]
+        dvine_us_equity_3Pct.rest_base  +  x for x in _DVINE_DAYS[1:36] ]
+
+
+class dvine_us_equity_2Pct(dvine_us_equity):
+    account = Alpaca.dvine_us_equity_2Pct
+    alpaca_args = _get_alpaca_args(account)
+    entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
+            '--nstd-thresh', 0.02 ]
+    rest_base = entry_point_base + [
+            '--bar-shift-multiplier', -1,
+            '--bar-shift-multiplier', 0,
+            '--clear-persistence' ]
+    compute_orders_cmds = None # Complicated initialization done below, outside the class
+    purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
+    purge_cmds = _get_purge_args(purge_base)
+
+
+dvine_us_equity_2Pct.compute_orders_cmds = [
+        dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:29] ]
 
 
 class dmoon:

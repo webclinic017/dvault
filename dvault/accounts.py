@@ -8,6 +8,12 @@ class Alpaca:
         base_url = "https://paper-api.alpaca.markets"
 
 
+    class dvine_us_equity_2Pct:
+        email = "derrick.karimi+dvine_us_equity_2Pct@gmail.com"
+        api_key = "PKCKDGNC3A582IX8TF37"
+        api_secret_key = "R5ncBJB4zLhOGvLdv8NKc9opnTPTiuj5eO7yezh2"
+        base_url = "https://paper-api.alpaca.markets"
+
     class dvine_us_equity_3Pct:
         email = "derrick.karimi+dvine_us_equity_3Pct@gmail.com"
         api_key = "PKEVISGRSJ608IAI1R39"
