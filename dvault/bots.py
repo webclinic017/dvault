@@ -74,9 +74,9 @@ _DVINE_DAYS = [
 def _get_purge_args(purge_base, postfix_args=[]):
 
     purge_orders_cmd = purge_base + [
-            '--purge-type', 'orders', '--log-level', 'DEBUG']
+            '--purge-type', 'orders', '--log-level', 'INFO']
     purge_positions_cmd = purge_base + [
-            '--purge-type', 'positions', '--log-level', 'DEBUG']
+            '--purge-type', 'positions', '--log-level', 'INFO']
     purge_sleep = ['sleep','2m']
     purge_cmds = [
             purge_orders_cmd + postfix_args,
