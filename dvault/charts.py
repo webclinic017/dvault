@@ -89,38 +89,50 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
 
 ## us_equity universe, 5% std dev filter
 
-class dvine_chart_us_equity_5Pct:
-    bot = bots.dvine_us_equity_5Pct
-    discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
+# 5Pct bot retired 2022-08-03, RIP,
+
+#   class dvine_chart_us_equity_5Pct:
+#       discord_webhook_url = "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc"
+
+
+## us_equity universe, 2.49% std dev filter
+
+class dvine_chart_us_equity_2Pct:
+    tmp_dir = path.join('/tmp', 'dvine_chart_us_equity_2Pct' + ''.join(random.choice(string.digits) for i in range(5)) )
+    bot = bots.dvine_us_equity_2Pct
+    #discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
+    discord_webhook_url = "https://discord.com/api/webhooks/1004582283468099674/P60Q6teNj3eetxoWDLM1k8XuoNRgYFGV76YIrWE5LeIEvdfBANyOAYNWG1hY2V0FrI7M" # to dvine channel on dstock server
+    from_date_args = ['--from-date', '2022-08-03T00:00:00']
+
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
+                '--plot-file', f'{tmp_dir}/dvine_chart_us_equity_2Pct.png',
+                '--output-file-list', f'{tmp_dir}/dvine_chart_us_equity_2Pct.json',
                 '--bot-name', bot.__name__ ]
-    from_date_args = ['--from-date', '2022-05-27T00:00:00']
 
-
-class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
+class dvine_us_equity_2Pct_all_returns(dvine_chart_us_equity_2Pct):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_all_returns',
+            'dvine_us_equity_2Pct_all_returns',
             dvine_chart_all_returns.entry_point_base +
-                dvine_chart_us_equity_5Pct.bot.strat.base_args +
-                dvine_chart_us_equity_5Pct.base_args +
-                dvine_chart_us_equity_5Pct.from_date_args,
-            dvine_chart_us_equity_5Pct.discord_webhook_url)
+                dvine_chart_us_equity_2Pct.bot.strat.base_args +
+                dvine_chart_us_equity_2Pct.base_args +
+                dvine_chart_us_equity_2Pct.from_date_args,
+            dvine_chart_us_equity_2Pct.discord_webhook_url)
 
-class dvine_us_equity_5Pct_recent_returns(dvine_chart_us_equity_5Pct):
+class dvine_us_equity_2Pct_recent_returns(dvine_chart_us_equity_2Pct):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_recent_returns',
-            dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_5Pct.base_args,
-            dvine_chart_us_equity_5Pct.discord_webhook_url)
+            'dvine_us_equity_2Pct_recent_returns',
+            dvine_chart_recent_returns.entry_point_base +  dvine_chart_us_equity_2Pct.base_args,
+            dvine_chart_us_equity_2Pct.discord_webhook_url)
 
-class dvine_us_equity_5Pct_performance(dvine_chart_accounts):
+class dvine_us_equity_2Pct_performance(dvine_chart_accounts):
     entry_point = _get_chart_cmd_series(
-            'dvine_us_equity_5Pct_performance',
+            'dvine_us_equity_2Pct_performance',
             dvine_chart_accounts.entry_point_base +
-                dvine_chart_us_equity_5Pct.bot.strat.base_args +
-                dvine_chart_us_equity_5Pct.base_args +
-                dvine_chart_us_equity_5Pct.from_date_args + [
-                        '--accounts-floor', 92500.00],
-            dvine_chart_us_equity_5Pct.discord_webhook_url)
+                dvine_chart_us_equity_2Pct.bot.strat.base_args +
+                dvine_chart_us_equity_2Pct.base_args +
+                dvine_chart_us_equity_2Pct.from_date_args + [
+                    '--accounts-floor', 25000.00],
+            dvine_chart_us_equity_2Pct.discord_webhook_url)

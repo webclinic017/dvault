@@ -96,20 +96,6 @@ def _get_purge_args(purge_base, postfix_args=[]):
             purge_positions_cmd + postfix_args ]
     return purge_cmds
 
-class dvine_us_equity_5Pct(dvine_us_equity):
-    account = Alpaca.dvine_us_equity_5Pct
-    alpaca_args = _get_alpaca_args(account)
-    entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
-            '--alpaca-base-url', account.base_url,
-            '--nstd-thresh', 0.05 ]
-    compute_orders_cmds = None # Complicated initialization done below, outside the class
-    purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
-    purge_cmds = _get_purge_args(purge_base)
-
-
-# one command for each tuple in the _DVINE_DAYS list
-dvine_us_equity_5Pct.compute_orders_cmds = [ dvine_us_equity_5Pct.entry_point_base + x for x in _DVINE_DAYS ]
-
 
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct

@@ -21,10 +21,12 @@ class Alpaca:
         base_url = "https://paper-api.alpaca.markets"
 
     class dvine_us_equity_5Pct:
+        # retried 2022-08-03
         email = "derrick.karimi+dvine_us_equity_5Pct@gmail.com"
         api_key = "PKN2HVDT8XUQC6L5HUFW"
         api_secret_key = "8bJ3gldCMjqHHlDA1tR5Y3LeGwZE98Be4KoHmfok"
         base_url = "https://paper-api.alpaca.markets"
+
 
     class play_time:
         email = "derrick.karimi+dvine_fractionable_universe_3Hour@gmail.com"
