@@ -174,4 +174,5 @@ class dmoon_adhoc_5m(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + [
             '--period-span-value', 5,
             '--period-span-units', 'Min',
-            '--bot-name', 'dmoon_adhoc_5m']
+            '--bot-name', 'dmoon_adhoc_5m',
+            '--strategy-bet-size-usd', 2000 ]
