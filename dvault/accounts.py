@@ -30,6 +30,6 @@ class Alpaca:
 
     class play_time:
         email = "derrick.karimi+dvine_fractionable_universe_3Hour@gmail.com"
-        api_key = "PKGGCAVI9HM3NK7XXEV0"
-        api_secret_key = "hgpYXcAaOD96EEikIEylhcOZno64cl0diNuDXqCq"
+        api_key = "PK4NHDDPMZE6SI6R8LST"
+        api_secret_key = "PD1mGvxqdS4W5CBarZfLfGVzUDtUsXr4DPm9VeJC"
         base_url = "https://paper-api.alpaca.markets"
