@@ -44,6 +44,19 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url, gen_args=[]):
 
     return [pre_clean, create_dir, gen_chart, notify, cleanup ]
 
+
+def _get_chart_base_args(bot,chart_name):
+
+    tmp_dir = path.join('/tmp', chart_name + ''.join(random.choice(string.digits) for i in range(5)) )
+    return \
+            bot.strat.base_args + \
+            bot.alpaca_args + \
+            [
+                '--plot-file', f'{tmp_dir}/{chart_name}.png',
+                '--output-file-list', f'{tmp_dir}/{chart_name}.json',
+                '--bot-name', bot.__name__,
+                ]
+
 ## us_equity universe, 3% std dev filter
 
 class dvine_chart_us_equity_3Pct:
@@ -104,13 +117,7 @@ class dvine_chart_us_equity_2Pct:
     discord_webhook_url = "https://discord.com/api/webhooks/1004582283468099674/P60Q6teNj3eetxoWDLM1k8XuoNRgYFGV76YIrWE5LeIEvdfBANyOAYNWG1hY2V0FrI7M" # to dvine channel on dstock server
     from_date_args = ['--from-date', '2022-08-03T00:00:00']
 
-    base_args = \
-            bot.strat.base_args + \
-            bot.alpaca_args + \
-            [
-                '--plot-file', f'{tmp_dir}/dvine_chart_us_equity_2Pct.png',
-                '--output-file-list', f'{tmp_dir}/dvine_chart_us_equity_2Pct.json',
-                '--bot-name', bot.__name__ ]
+    base_args = _get_chart_base_args(bot, "dvine_chart_us_equity_2Pct")
 
 class dvine_us_equity_2Pct_all_returns(dvine_chart_us_equity_2Pct):
     entry_point = _get_chart_cmd_series(
@@ -136,3 +143,64 @@ class dvine_us_equity_2Pct_performance(dvine_chart_accounts):
                 dvine_chart_us_equity_2Pct.from_date_args + [
                     '--accounts-floor', 25000.00],
             dvine_chart_us_equity_2Pct.discord_webhook_url)
+
+
+
+class dmule_chart:
+    entry_point_base = ["dmule_chart"]
+
+class dmule_chart_orders:
+    entry_point_base = dmule_chart.entry_point_base + [
+            '--chart-type', 'orders',
+            '--with-order-status', 'filled' ]
+
+class dmule_chart_accounts:
+    entry_point_base = dmule_chart.entry_point_base + [
+            '--chart-type', 'accounts'
+            ]
+
+class dmule_chart_all_returns:
+    entry_point_base = dmule_chart_orders.entry_point_base + [
+            '--orders-max-spam', 1 ]
+
+class dmule_chart_recent_returns:
+    entry_point_base = dmule_chart_orders.entry_point_base + [
+            '--orders-max-spam', 2,
+            '--orders-with-fill-after', 'now' ]
+
+class dmule_chart_dmoon_adhoc_5m:
+    tmp_dir = path.join('/tmp', 'dmule_chart_dmoon_adhoc_5m' + ''.join(random.choice(string.digits) for i in range(5)) )
+    bot = bots.dmoon_adhoc_5m
+    discord_webhook_url = bot.discord_webhook_url
+    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+
+    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_5m") + bot.common_args
+
+
+class dmule_chart_dmoon_adhoc_5m_all_returns(dmule_chart_dmoon_adhoc_5m):
+    entry_point = _get_chart_cmd_series(
+            'dmule_chart_dmoon_adhoc_5m_all_returns',
+            dmule_chart_all_returns.entry_point_base +
+                dmule_chart_dmoon_adhoc_5m.bot.strat.base_args +
+                dmule_chart_dmoon_adhoc_5m.base_args +
+                dmule_chart_dmoon_adhoc_5m.from_date_args,
+            dmule_chart_dmoon_adhoc_5m.discord_webhook_url)
+
+
+class dmule_chart_dmoon_adhoc_1m:
+    bot = bots.dmoon_adhoc_1m
+    discord_webhook_url = bot.discord_webhook_url
+    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+
+    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_1m") + bot.common_args
+
+
+class dmule_chart_dmoon_adhoc_1m_all_returns(dmule_chart_dmoon_adhoc_1m):
+    entry_point = _get_chart_cmd_series(
+            'dmule_chart_dmoon_adhoc_1m_all_returns',
+            dmule_chart_all_returns.entry_point_base +
+                dmule_chart_dmoon_adhoc_1m.bot.strat.base_args +
+                dmule_chart_dmoon_adhoc_1m.base_args +
+                dmule_chart_dmoon_adhoc_1m.from_date_args,
+            dmule_chart_dmoon_adhoc_1m.discord_webhook_url)
+

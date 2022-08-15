@@ -149,9 +149,11 @@ class dmoon_adhoc(dmoon):
     account = Alpaca.play_time
     alpaca_args = _get_alpaca_args(account)
     discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
-    entry_point_base = dmoon.entry_point_base + alpaca_args + [
-            '--universe-name', 'crypto',
+
+    common_args = ['--universe-name', 'crypto']
+    entry_point_base = dmoon.entry_point_base + alpaca_args + common_args + [
             '--discord-webhook-url', discord_webhook_url]
+
     entry_point = entry_point_base
 
 class dmoon_adhoc_3s(dmoon_adhoc):
@@ -159,7 +161,7 @@ class dmoon_adhoc_3s(dmoon_adhoc):
             '--period-span-value', 10.0,
             '--period-span-units', 'Sec',
             '--bot-name', 'dmoon_adhoc_10s',
-            '--strategy-bet-size-usd', 2000,
+            '--strategy-bet-size-usd', 50000,
             '--entry-signal-look-back-periods', 3,
             '--exit-signal-look-back-periods', 2 ]
 
