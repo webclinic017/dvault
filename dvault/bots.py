@@ -140,6 +140,25 @@ class dvine_us_equity_2Pct(dvine_us_equity):
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
 
+class dvine_us_equity_5Pct(dvine_us_equity):
+    account = Alpaca.dvine_us_equity_5Pct
+    alpaca_args = _get_alpaca_args(account)
+    entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
+            '--nstd-thresh', 0.05,
+            '--strategy-bet-size-usd', 100.00]
+    rest_base = entry_point_base + [
+            '--bar-shift-multiplier', -1,
+            '--bar-shift-multiplier', 0,
+            '--clear-persistence' ]
+    compute_orders_cmds = None # Complicated initialization done below, outside the class
+    purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
+    purge_cmds = _get_purge_args(purge_base)
+
+
+dvine_us_equity_5Pct.compute_orders_cmds = [
+        dvine_us_equity_5Pct.rest_base  +  x for x in _DVINE_DAYS[31:] ]
+
+
 
 class dmoon:
     strat = Dmoon
