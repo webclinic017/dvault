@@ -205,6 +205,8 @@ class dmoon_adhoc_5m(dmoon_adhoc):
             '--exit-signal-look-back-periods', 3 ]
 
 class dmoon_adhoc_1m(dmoon_adhoc):
+    account = Alpaca.dmoon_alpha
+    alpaca_args = _get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
             '--period-span-value', 1,
             '--period-span-units', 'Min',
