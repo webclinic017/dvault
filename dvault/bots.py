@@ -165,7 +165,7 @@ class dmoon:
     entry_point_base = ["dmoon"] + strat.default_args + []
 
 class dmoon_adhoc(dmoon):
-    discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
+    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
 
     common_args = ['--universe-name', 'crypto']
     entry_point_base = dmoon.entry_point_base + common_args + [
