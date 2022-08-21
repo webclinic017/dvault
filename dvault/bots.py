@@ -193,8 +193,8 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_dev',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 2, #10
-            '--exit-signal-look-back-periods', 2 ] #6
+            '--entry-signal-look-back-periods', 10, #10
+            '--exit-signal-look-back-periods', 6 ] #6
 
 
 class dmoon_adhoc_5m(dmoon_adhoc):
