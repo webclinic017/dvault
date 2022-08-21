@@ -179,22 +179,22 @@ class dmoon_adhoc_3s(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10.0,
             '--period-span-units', 'Sec',
-            '--bot-name', 'dmoon_adhoc_10s',
+            '--bot-name', 'dmoon_adhoc_3s',
             '--strategy-bet-size-usd', 50000,
             '--entry-signal-look-back-periods', 3,
             '--exit-signal-look-back-periods', 2 ]
 
 
-class dmoon_adhoc_10s(dmoon_adhoc):
+class dmoon_adhoc_dev(dmoon_adhoc):
     account = Alpaca.play_time
     alpaca_args = _get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10,
             '--period-span-units', 'Sec',
-            '--bot-name', 'dmoon_adhoc_10s',
+            '--bot-name', 'dmoon_adhoc_dev',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 8,
-            '--exit-signal-look-back-periods', 8 ]
+            '--entry-signal-look-back-periods', 2, #10
+            '--exit-signal-look-back-periods', 2 ] #6
 
 
 class dmoon_adhoc_5m(dmoon_adhoc):
