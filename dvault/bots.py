@@ -191,7 +191,10 @@ class dmoon_adhoc_10s(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10,
             '--period-span-units', 'Sec',
-            '--bot-name', 'dmoon_adhoc_10s']
+            '--bot-name', 'dmoon_adhoc_10s',
+            '--entry-signal-look-back-periods', 2,
+            '--exit-signal-look-back-periods', 2 ]
+
 
 class dmoon_adhoc_5m(dmoon_adhoc):
     account = Alpaca.play_time
