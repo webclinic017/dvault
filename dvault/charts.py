@@ -218,20 +218,20 @@ class dmule_chart_dmoon_adhoc_5m_all_returns(dmule_chart_dmoon_adhoc_5m):
             dmule_chart_dmoon_adhoc_5m.discord_webhook_url)
 
 
-class dmule_chart_dmoon_adhoc_1m:
-    bot = bots.dmoon_adhoc_1m
+class dmule_chart_dmoon_adhoc_10s:
+    bot = bots.dmoon_adhoc_10s
     discord_webhook_url = bot.discord_webhook_url
-    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+    from_date_args = ['--from-date', '2022-08-18T00:00:00']
 
-    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_1m") + bot.common_args
+    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_10s") + bot.common_args
 
 
-class dmule_chart_dmoon_adhoc_1m_all_returns(dmule_chart_dmoon_adhoc_1m):
+class dmule_chart_dmoon_adhoc_10s_all_returns(dmule_chart_dmoon_adhoc_10s):
     entry_point = _get_chart_cmd_series(
-            'dmule_chart_dmoon_adhoc_1m_all_returns',
+            'dmule_chart_dmoon_adhoc_10s_all_returns',
             dmule_chart_all_returns.entry_point_base +
-                dmule_chart_dmoon_adhoc_1m.bot.strat.base_args +
-                dmule_chart_dmoon_adhoc_1m.base_args +
-                dmule_chart_dmoon_adhoc_1m.from_date_args,
-            dmule_chart_dmoon_adhoc_1m.discord_webhook_url)
+                dmule_chart_dmoon_adhoc_10s.bot.strat.base_args +
+                dmule_chart_dmoon_adhoc_10s.base_args +
+                dmule_chart_dmoon_adhoc_10s.from_date_args,
+            dmule_chart_dmoon_adhoc_10s.discord_webhook_url)
 
