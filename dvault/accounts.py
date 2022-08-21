@@ -40,3 +40,14 @@ class Alpaca:
         api_key = "PKMWPAAJ4URQJSM2X1KI"
         api_secret_key = "OATplWoidbTHrrn9HXAprWCcOXgT7QQoEyJakNrJ"
         base_url = "https://paper-api.alpaca.markets"
+
+def get_alpaca_args(account):
+    return [ '--alpaca-base-url', account.base_url,
+             '--alpaca-api-key', account.api_key,
+             '--alpaca-secret-key', account.api_secret_key ]
+
+def get_alpaca_data_args():
+    return [
+            "--alpaca-api-data-key", Alpaca.prime_time.api_key,
+            "--alpaca-secret-data-key", Alpaca.prime_time.api_secret_key ]
+

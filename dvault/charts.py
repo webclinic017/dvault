@@ -3,6 +3,7 @@ from os import path
 import string
 import random
 from datetime import datetime
+from dvault.accounts import (Alpaca, get_alpaca_data_args, get_alpaca_args)
 
 
 class dvine_chart:
@@ -29,13 +30,13 @@ class dvine_chart_recent_returns:
 
 
 
-def _get_chart_cmd_series(name, base_args, discord_webhook_url, gen_args=[]):
+def _get_chart_cmd_series(name, base_args, discord_webhook_url):
     tmp_dir = path.join('/tmp','_get_chart_cmd_series' + ''.join(random.choice(string.digits) for i in range(5)) )
     pre_clean = [ 'rm', '-rf', tmp_dir ]
     create_dir = [ 'mkdir', '-p', tmp_dir]
     gen_chart = base_args + [
                 '--plot-file', f'{tmp_dir}/{name}.png',
-                '--output-file-list', f'{tmp_dir}/{name}.json' ] + gen_args
+                '--output-file-list', f'{tmp_dir}/{name}.json' ]
 
     notify = [ 'dsquire',
             '--embed-file-list', f'{tmp_dir}/{name}.json',
@@ -46,15 +47,19 @@ def _get_chart_cmd_series(name, base_args, discord_webhook_url, gen_args=[]):
     return [pre_clean, create_dir, gen_chart, notify, cleanup ]
 
 
+def _get_chart_tmp_args(chart_name):
+    tmp_dir = path.join('/tmp', chart_name + ''.join(random.choice(string.digits) for i in range(5)) )
+    return [
+            '--plot-file', f'{tmp_dir}/{chart_name}.png',
+            '--output-file-list', f'{tmp_dir}/{chart_name}.json']
+
+
 def _get_chart_base_args(bot,chart_name):
 
-    tmp_dir = path.join('/tmp', chart_name + ''.join(random.choice(string.digits) for i in range(5)) )
     return \
             bot.strat.base_args + \
             bot.alpaca_args + \
             [
-                '--plot-file', f'{tmp_dir}/{chart_name}.png',
-                '--output-file-list', f'{tmp_dir}/{chart_name}.json',
                 '--bot-name', bot.__name__,
                 ]
 
@@ -111,7 +116,7 @@ class dvine_chart_us_equity_2Pct:
     discord_webhook_url = "https://discord.com/api/webhooks/1004582283468099674/P60Q6teNj3eetxoWDLM1k8XuoNRgYFGV76YIrWE5LeIEvdfBANyOAYNWG1hY2V0FrI7M" # to dvine channel on dstock server
     from_date_args = ['--from-date', '2022-08-03T00:00:00']
 
-    base_args = _get_chart_base_args(bot, "dvine_chart_us_equity_2Pct")
+    base_args = _get_chart_tmp_args("dvine_chart_us_equity_2Pct") + _get_chart_base_args(bot, "dvine_chart_us_equity_2Pct")
 
 class dvine_us_equity_2Pct_all_returns(dvine_chart_us_equity_2Pct):
     entry_point = _get_chart_cmd_series(
@@ -149,7 +154,7 @@ class dvine_chart_us_equity_5Pct:
     discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
     from_date_args = ['--from-date', '2022-08-19T00:00:00']
 
-    base_args = _get_chart_base_args(bot, "dvine_chart_us_equity_5Pct")
+    base_args = _get_chart_tmp_args("dvine_chart_us_equity_5Pct") +_get_chart_base_args(bot, "dvine_chart_us_equity_5Pct")
 
 class dvine_us_equity_5Pct_all_returns(dvine_chart_us_equity_5Pct):
     entry_point = _get_chart_cmd_series(
@@ -200,23 +205,25 @@ class dmule_chart_recent_returns:
             '--orders-max-spam', 2,
             '--orders-with-fill-after', 'now' ]
 
-class dmule_chart_dmoon_adhoc_5m:
-    tmp_dir = path.join('/tmp', 'dmule_chart_dmoon_adhoc_5m' + ''.join(random.choice(string.digits) for i in range(5)) )
-    bot = bots.dmoon_adhoc_5m
-    discord_webhook_url = bot.discord_webhook_url
-    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+class dmule_chart_bots_all_returns(dmule_chart_all_returns):
 
-    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_5m") + bot.common_args
+    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
 
-
-class dmule_chart_dmoon_adhoc_5m_all_returns(dmule_chart_dmoon_adhoc_5m):
     entry_point = _get_chart_cmd_series(
-            'dmule_chart_dmoon_adhoc_5m_all_returns',
+            'dmule_chart_bots_all_returns',
+            # TODO this is dedicated to one account only right now, this should
+            # change to shared account
+
             dmule_chart_all_returns.entry_point_base +
-                dmule_chart_dmoon_adhoc_5m.bot.strat.base_args +
-                dmule_chart_dmoon_adhoc_5m.base_args +
-                dmule_chart_dmoon_adhoc_5m.from_date_args,
-            dmule_chart_dmoon_adhoc_5m.discord_webhook_url)
+            get_alpaca_data_args() +
+            get_alpaca_args(Alpaca.play_time) +
+            [
+                '--from-date', '2022-08-18T00:00:00',
+                '--to-date', datetime.now().replace(hour=23,minute=59,second=59,microsecond=0).isoformat(),
+                '--orders-series', 'tikr',
+                '--universe-name', 'crypto'
+                ],
+            discord_webhook_url)
 
 
 class dmule_chart_dmoon_adhoc_dev:
@@ -228,10 +235,12 @@ class dmule_chart_dmoon_adhoc_dev:
             '--orders-series', 'tikr',
             ]
 
-    base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_dev") + bot.common_args
+    base_args = _get_chart_tmp_args("dmule_chart_dmoon_adhoc_dev") + _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_dev") + bot.common_args
 
 
 class dmule_chart_dmoon_adhoc_dev_all_returns(dmule_chart_dmoon_adhoc_dev):
+
+    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
     entry_point = _get_chart_cmd_series(
             'dmule_chart_dmoon_adhoc_dev_all_returns',
             dmule_chart_all_returns.entry_point_base +

@@ -1,11 +1,6 @@
 import itertools
 from dvault.strats import (Dvine, Dmoon)
-from dvault.accounts import (Alpaca)
-
-def _get_alpaca_args(account):
-    return [ '--alpaca-base-url', account.base_url,
-             '--alpaca-api-key', account.api_key,
-             '--alpaca-secret-key', account.api_secret_key ]
+from dvault.accounts import (Alpaca,get_alpaca_args)
 
 
 class dvine_us_equity:
@@ -99,7 +94,7 @@ def _get_purge_args(purge_base, postfix_args=[]):
 
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.03 ]
     first_base = entry_point_base
@@ -124,7 +119,7 @@ dvine_us_equity_3Pct.compute_orders_cmds = [
 
 class dvine_us_equity_2Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_2Pct
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.0249,
             '--strategy-bet-size-usd', 500.00]
@@ -142,7 +137,7 @@ dvine_us_equity_2Pct.compute_orders_cmds = [
 
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.05,
             '--strategy-bet-size-usd', 100.00]
@@ -175,7 +170,7 @@ class dmoon_adhoc(dmoon):
 
 class dmoon_adhoc_3s(dmoon_adhoc):
     account = Alpaca.play_time
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10.0,
             '--period-span-units', 'Sec',
@@ -187,7 +182,7 @@ class dmoon_adhoc_3s(dmoon_adhoc):
 
 class dmoon_adhoc_dev(dmoon_adhoc):
     account = Alpaca.play_time
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 1,
             '--period-span-units', 'Min',
@@ -199,7 +194,7 @@ class dmoon_adhoc_dev(dmoon_adhoc):
 
 class dmoon_adhoc_5m(dmoon_adhoc):
     account = Alpaca.play_time
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
             '--period-span-value', 5,
             '--period-span-units', 'Min',
@@ -210,7 +205,7 @@ class dmoon_adhoc_5m(dmoon_adhoc):
 
 class dmoon_adhoc_1m(dmoon_adhoc):
     account = Alpaca.dmoon_alpha
-    alpaca_args = _get_alpaca_args(account)
+    alpaca_args = get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
             '--period-span-value', 1,
             '--period-span-units', 'Min',
