@@ -196,7 +196,9 @@ class dmoon_adhoc_5m(dmoon_adhoc):
             '--period-span-value', 5,
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_5m',
-            '--strategy-bet-size-usd', 2000 ]
+            '--strategy-bet-size-usd', 50000,
+            '--entry-signal-look-back-periods', 7,
+            '--exit-signal-look-back-periods', 3 ]
 
 class dmoon_adhoc_1m(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + [
@@ -204,5 +206,5 @@ class dmoon_adhoc_1m(dmoon_adhoc):
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_1m',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 3,
-            '--exit-signal-look-back-periods', 5 ]
+            '--entry-signal-look-back-periods', 2,
+            '--exit-signal-look-back-periods', 2 ]
