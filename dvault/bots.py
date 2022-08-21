@@ -165,18 +165,18 @@ class dmoon:
     entry_point_base = ["dmoon"] + strat.default_args + []
 
 class dmoon_adhoc(dmoon):
-    account = Alpaca.play_time
-    alpaca_args = _get_alpaca_args(account)
     discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
 
     common_args = ['--universe-name', 'crypto']
-    entry_point_base = dmoon.entry_point_base + alpaca_args + common_args + [
+    entry_point_base = dmoon.entry_point_base + common_args + [
             '--discord-webhook-url', discord_webhook_url]
 
     entry_point = entry_point_base
 
 class dmoon_adhoc_3s(dmoon_adhoc):
-    entry_point = dmoon_adhoc.entry_point_base + [
+    account = Alpaca.dmoon_alpha
+    alpaca_args = _get_alpaca_args(account)
+    entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10.0,
             '--period-span-units', 'Sec',
             '--bot-name', 'dmoon_adhoc_10s',
@@ -186,13 +186,17 @@ class dmoon_adhoc_3s(dmoon_adhoc):
 
 
 class dmoon_adhoc_10s(dmoon_adhoc):
-    entry_point = dmoon_adhoc.entry_point_base + [
+    account = Alpaca.play_time
+    alpaca_args = _get_alpaca_args(account)
+    entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 10,
             '--period-span-units', 'Sec',
             '--bot-name', 'dmoon_adhoc_10s']
 
 class dmoon_adhoc_5m(dmoon_adhoc):
-    entry_point = dmoon_adhoc.entry_point_base + [
+    account = Alpaca.play_time
+    alpaca_args = _get_alpaca_args(account)
+    entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
             '--period-span-value', 5,
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_5m',
@@ -201,7 +205,7 @@ class dmoon_adhoc_5m(dmoon_adhoc):
             '--exit-signal-look-back-periods', 3 ]
 
 class dmoon_adhoc_1m(dmoon_adhoc):
-    entry_point = dmoon_adhoc.entry_point_base + [
+    entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
             '--period-span-value', 1,
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_1m',

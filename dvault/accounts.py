@@ -34,3 +34,9 @@ class Alpaca:
         api_key = "PKGW3U74VVML9G29EM8H"
         api_secret_key = "gmKF0GMkhSPrXOBPmtdS1RMgrZSSLDbBoBo6cVak"
         base_url = "https://paper-api.alpaca.markets"
+
+    class dmoon_alpha:
+        email = "derrick.karimi+dvine_fractionable_universe_1Min@gmail.com"
+        apu_key = "PKMWPAAJ4URQJSM2X1KI"
+        api_secret_key = "OATplWoidbTHrrn9HXAprWCcOXgT7QQoEyJakNrJ"
+        base_url = "https://paper-api.alpaca.markets"
