@@ -193,8 +193,8 @@ class dmoon_adhoc_10s(dmoon_adhoc):
             '--period-span-units', 'Sec',
             '--bot-name', 'dmoon_adhoc_10s',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 2,
-            '--exit-signal-look-back-periods', 2 ]
+            '--entry-signal-look-back-periods', 4,
+            '--exit-signal-look-back-periods', 4 ]
 
 
 class dmoon_adhoc_5m(dmoon_adhoc):
