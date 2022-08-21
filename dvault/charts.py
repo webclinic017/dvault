@@ -224,7 +224,8 @@ class dmule_chart_dmoon_adhoc_dev:
     discord_webhook_url = bot.discord_webhook_url
     from_date_args = [
             '--from-date', '2022-08-18T00:00:00',
-            '--to-date', datetime.now().replace(microsecond=0).isoformat()
+            '--to-date', datetime.now().replace(microsecond=0).isoformat(),
+            '--orders-series', 'tikr',
             ]
 
     base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_dev") + bot.common_args
