@@ -221,7 +221,10 @@ class dmule_chart_dmoon_adhoc_5m_all_returns(dmule_chart_dmoon_adhoc_5m):
 class dmule_chart_dmoon_adhoc_dev:
     bot = bots.dmoon_adhoc_dev
     discord_webhook_url = bot.discord_webhook_url
-    from_date_args = ['--from-date', '2022-08-18T00:00:00']
+    from_date_args = [
+            '--from-date', '2022-08-18T00:00:00',
+            '--to-date', datetime.now().replace(microsecond=0).isoformat()
+            ]
 
     base_args = _get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_dev") + bot.common_args
 
