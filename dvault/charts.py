@@ -221,7 +221,8 @@ class dmule_chart_bots_all_returns(dmule_chart_all_returns):
                 '--from-date', '2022-08-18T00:00:00',
                 '--to-date', datetime.now().replace(hour=23,minute=59,second=59,microsecond=0).isoformat(),
                 '--orders-series', 'tikr',
-                '--universe-name', 'crypto'
+                '--universe-name', 'crypto',
+                '--orders-max-spam', 1,
                 ],
             discord_webhook_url)
 
