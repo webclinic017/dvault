@@ -151,7 +151,7 @@ class dvine_chart_us_equity_5Pct:
     bot = bots.dvine_us_equity_5Pct
 #       discord_webhook_url =
 #       "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc" # to channel on dstock sercer
-    discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
+    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
     from_date_args = ['--from-date', '2022-08-19T00:00:00']
 
     base_args = _get_chart_tmp_args("dvine_chart_us_equity_5Pct") +_get_chart_base_args(bot, "dvine_chart_us_equity_5Pct")
