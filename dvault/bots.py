@@ -96,7 +96,8 @@ class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
     alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
-            '--nstd-thresh', 0.03 ]
+            '--nstd-thresh', 0.03,
+            '--bot-name', 'dvine_us_equity_3Pct' ]
     first_base = entry_point_base
     rest_base = entry_point_base + [
             '--bar-shift-multiplier', -1,
@@ -122,7 +123,8 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.0249,
-            '--strategy-bet-size-usd', 500.00]
+            '--strategy-bet-size-usd', 500.00,
+            '--bot-name', 'dvine_us_equity_2Pct' ]
     rest_base = entry_point_base + [
             '--bar-shift-multiplier', -1,
             '--bar-shift-multiplier', 0,
@@ -140,7 +142,8 @@ class dvine_us_equity_5Pct(dvine_us_equity):
     alpaca_args = get_alpaca_args(account)
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.05,
-            '--strategy-bet-size-usd', 100.00]
+            '--strategy-bet-size-usd', 100.00,
+            '--bot-name', 'dvine_us_equity_5Pct' ]
     rest_base = entry_point_base + [
             '--bar-shift-multiplier', -1,
             '--bar-shift-multiplier', 0,
