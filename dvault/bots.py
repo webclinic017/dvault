@@ -105,7 +105,8 @@ class dvine_us_equity_3Pct(dvine_us_equity):
             '--clear-persistence' ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
-    purge_cmds = _get_purge_args(purge_base)
+    purge_cmds = _get_purge_args(purge_base) + [
+            '--bot-name', 'dvine_us_equity_3Pct']
 
 
 # The first command runs daily in the traditional sense with persistence
@@ -131,7 +132,8 @@ class dvine_us_equity_2Pct(dvine_us_equity):
             '--clear-persistence' ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
-    purge_cmds = _get_purge_args(purge_base)
+    purge_cmds = _get_purge_args(purge_base) + [
+            '--bot-name', 'dvine_us_equity_2Pct']
 
 
 dvine_us_equity_2Pct.compute_orders_cmds = [
@@ -150,7 +152,8 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--clear-persistence' ]
     compute_orders_cmds = None # Complicated initialization done below, outside the class
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
-    purge_cmds = _get_purge_args(purge_base)
+    purge_cmds = _get_purge_args(purge_base) + [
+            '--bot-name', 'dvine_us_equity_5Pct']
 
 
 dvine_us_equity_5Pct.compute_orders_cmds = [
@@ -191,7 +194,7 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_dev',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 15, #10
+            '--entry-signal-look-back-periods', 20, #10
             '--exit-signal-look-back-periods', 5 ] #6
 
 
