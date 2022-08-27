@@ -63,6 +63,10 @@ def _run(
             raise AttributeError(
                     "Entry: '" + entry_name + "' not found in " + str(entries))
 
+        is_list = isinstance(cmd, list)
+        if not is_list:
+            raise AssertionError("dvault works with lists, not " + type(cmd).__name__)
+
         is_nested_list = isinstance(cmd, list) and len(cmd) > 0 and isinstance(cmd[0], list)
 
         if not is_nested_list:
@@ -79,6 +83,7 @@ def _run(
                 else:
                     _check_call(dry_run, [str(x) for x in cur_cmd+passed_args])
             else:
+                print(1,cur_cmd,2,passed_args)
                 print(" ".join([quote(str(x)) for x in cur_cmd+passed_args]))
     else:
         raise Exception(f"No actions to take with {bot_name}")

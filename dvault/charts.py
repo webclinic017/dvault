@@ -70,8 +70,8 @@ class dvine_chart_us_equity_3Pct:
     bot = bots.dvine_us_equity_3Pct
     #discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
     discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1" # to dvine channel on dstock server
-    from_date_args = ['--from-date', '2022-06-08T00:00:00']
 
+    from_date_args = bot.from_date_args
     base_args = \
             bot.strat.base_args + \
             bot.alpaca_args + \

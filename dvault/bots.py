@@ -108,6 +108,12 @@ class dvine_us_equity_3Pct(dvine_us_equity):
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_3Pct'])
 
+    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+    orders_table_cmd = ['dmule_table',
+            '--chart-type', 'orders'
+            ] + alpaca_args + from_date_args
+
+
 
 # The first command runs daily in the traditional sense with persistence
 # The rest of the commands clear persistence, and then seed themselves with a
