@@ -179,6 +179,8 @@ class dvine_us_equity_5Pct_performance(dvine_chart_accounts):
             dvine_chart_us_equity_5Pct.discord_webhook_url)
 
 
+# Diagram:
+# https://sketchviz.com/@AlwaysTraining/5b68a4e3e5494e5f7cf2ed20678bcced/b47f5491f7c4fbd5736128f96004552f4ec0c685
 
 class dmule_chart:
     entry_point_base = ["dmule_chart"]
@@ -202,12 +204,12 @@ class dmule_chart_recent_returns:
             '--orders-max-spam', 2,
             '--orders-with-fill-after', 'now' ]
 
-class dmule_chart_bots_all_returns(dmule_chart_all_returns):
+class dmule_chart_all_tikr_returns(dmule_chart_all_returns):
 
     discord_webhook_url = dstock_dspam.webhook_url
 
     entry_point = _get_chart_cmd_series(
-            'dmule_chart_bots_all_returns',
+            'dmule_chart_all_tikr_returns',
             # TODO this is dedicated to one account only right now, this should
             # change to shared account
 
@@ -215,11 +217,13 @@ class dmule_chart_bots_all_returns(dmule_chart_all_returns):
             get_alpaca_data_args() +
             get_alpaca_args(Alpaca.play_time) +
             [
-                '--from-date', '2022-08-18T00:00:00',
+                '--from-date', '2022-08-25T00:00:00',
                 '--to-date', datetime.now().replace(hour=23,minute=59,second=59,microsecond=0).isoformat(),
                 '--orders-series', 'tikr',
                 '--universe-name', 'crypto',
                 '--orders-max-spam', 1,
+                '--orders-y-max', 0.04,
+                '--orders-y-min', -0.04
                 ],
             discord_webhook_url)
 
