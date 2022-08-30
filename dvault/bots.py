@@ -1,6 +1,7 @@
 import itertools
 from dvault.strats import (Dvine, Dmoon)
 from dvault.accounts import (Alpaca,get_alpaca_args)
+from dvault.discords import (dmoon_adhoc)
 
 
 class dvine_us_equity:
@@ -172,7 +173,7 @@ class dmoon:
     entry_point_base = ["dmoon"] + strat.default_args + []
 
 class dmoon_adhoc(dmoon):
-    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
+    discord_webhook_url = dmoon_adhoc.webhook_url
 
     common_args = ['--universe-name', 'crypto']
     entry_point_base = dmoon.entry_point_base + common_args + [

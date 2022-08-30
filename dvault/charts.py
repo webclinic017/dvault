@@ -4,6 +4,7 @@ import string
 import random
 from datetime import datetime
 from dvault.accounts import (Alpaca, get_alpaca_data_args, get_alpaca_args)
+from dvault.discords import (dvine_5pct, dvine_3pct, dvine_2pct, dstock_dspam)
 
 
 class dvine_chart:
@@ -68,8 +69,7 @@ def _get_chart_base_args(bot,chart_name):
 class dvine_chart_us_equity_3Pct:
     tmp_dir = path.join('/tmp', 'dvine_chart_us_equity_3Pct' + ''.join(random.choice(string.digits) for i in range(5)) )
     bot = bots.dvine_us_equity_3Pct
-    #discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
-    discord_webhook_url = "https://discordapp.com/api/webhooks/985010880771141663/iDyB-jVlcfvCdpIGm3cGlt7GLy3uoNozQCQIPihsF9BPQtVOSpeSYchit9SQRbo1gHo1" # to dvine channel on dstock server
+    discord_webhook_url = dvine_3pct.webhook_url
 
     from_date_args = bot.from_date_args
     base_args = \
@@ -112,8 +112,7 @@ class dvine_us_equity_3Pct_performance(dvine_chart_accounts):
 class dvine_chart_us_equity_2Pct:
     tmp_dir = path.join('/tmp', 'dvine_chart_us_equity_2Pct' + ''.join(random.choice(string.digits) for i in range(5)) )
     bot = bots.dvine_us_equity_2Pct
-    #discord_webhook_url = "https://discord.com/api/webhooks/999116224464158762/6lABNlrzm3oBucsxXjrfS8_ppAaqxUG5QH-OboKwAOpv3OVIT3s9ovJycSskjKwD7OYk" # to general channel on dvine server
-    discord_webhook_url = "https://discord.com/api/webhooks/1004582283468099674/P60Q6teNj3eetxoWDLM1k8XuoNRgYFGV76YIrWE5LeIEvdfBANyOAYNWG1hY2V0FrI7M" # to dvine channel on dstock server
+    discord_webhook_url = dvine_2pct.webhook_url
     from_date_args = ['--from-date', '2022-08-03T00:00:00']
 
     base_args = _get_chart_tmp_args("dvine_chart_us_equity_2Pct") + _get_chart_base_args(bot, "dvine_chart_us_equity_2Pct")
@@ -149,9 +148,7 @@ class dvine_us_equity_2Pct_performance(dvine_chart_accounts):
 class dvine_chart_us_equity_5Pct:
     tmp_dir = path.join('/tmp', 'dvine_chart_us_equity_5Pct' + ''.join(random.choice(string.digits) for i in range(5)) )
     bot = bots.dvine_us_equity_5Pct
-#       discord_webhook_url =
-#       "https://discord.com/api/webhooks/985015648923029544/tkru1WEjUkW3M_j1MrXOUQuQXZpbr0O6I7g84xyUFEcvfFbLlXDhnfpoVjDS7FwofdFc" # to channel on dstock sercer
-    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
+    discord_webhook_url = dvine_5pct.webhook_url
     from_date_args = ['--from-date', '2022-08-19T00:00:00']
 
     base_args = _get_chart_tmp_args("dvine_chart_us_equity_5Pct") +_get_chart_base_args(bot, "dvine_chart_us_equity_5Pct")
@@ -207,7 +204,7 @@ class dmule_chart_recent_returns:
 
 class dmule_chart_bots_all_returns(dmule_chart_all_returns):
 
-    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
+    discord_webhook_url = dstock_dspam.webhook_url
 
     entry_point = _get_chart_cmd_series(
             'dmule_chart_bots_all_returns',
@@ -241,7 +238,7 @@ class dmule_chart_dmoon_adhoc_dev:
 
 class dmule_chart_dmoon_adhoc_dev_all_returns(dmule_chart_dmoon_adhoc_dev):
 
-    discord_webhook_url = "https://discord.com/api/webhooks/985008285914636288/SoT91_xorPb7-Ch4FsQEDhmXkXz2yht9C8lqmcuw0vlR-FrGEiNP3gXXYE78c4tpyZdz" # to general channel on dvine server
+    discord_webhook_url = dstock_dspam.webhook_url
     entry_point = _get_chart_cmd_series(
             'dmule_chart_dmoon_adhoc_dev_all_returns',
             dmule_chart_all_returns.entry_point_base +
