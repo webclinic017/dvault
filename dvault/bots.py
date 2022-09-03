@@ -1,13 +1,13 @@
 import itertools
-from dvault.strats import (dvine, dmoon)
+from dvault import strats
+from dvault import discords
 from dvault.accounts import (Alpaca,get_alpaca_args)
-from dvault.discords import (dmoon_adhoc, dvine_5pct, dvine_2pct)
 from dvault._charts import (get_chart_cmd_series, dmule_chart, chart_all_returns,
         get_chart_base_args, chart_recent_returns)
 
 
 class dvine_us_equity:
-    strat = dvine
+    strat = strats.dvine
     entry_point_base = ["dvine"] + strat.default_args + [
             '--log-level', 'INFO',
             '--strategy-bet-size-usd', 100 ]
@@ -170,7 +170,7 @@ dvine_us_equity_5Pct.chart_all_returns_cmds = get_chart_cmd_series(
                 get_chart_base_args(dvine_us_equity_5Pct, dvine_us_equity.strat) + [
                     '--orders-series', 'param',
                     '--from-date', '2022-08-19T00:00:00'],
-            dvine_5pct.webhook_url)
+            discords.dvine_5pct.webhook_url)
 
 dvine_us_equity_5Pct.chart_recent_returns_cmds = get_chart_cmd_series(
             'dvine_us_equity_5Pct',
@@ -179,37 +179,24 @@ dvine_us_equity_5Pct.chart_recent_returns_cmds = get_chart_cmd_series(
                 get_chart_base_args(dvine_us_equity_5Pct, dvine_us_equity.strat) + [
                     '--orders-series', 'param',
                     '--from-date', '2022-08-19T00:00:00'],
-            dvine_5pct.webhook_url)
+            discords.dvine_5pct.webhook_url)
 
 dvine_us_equity_5Pct.compute_orders_cmds = [
         dvine_us_equity_5Pct.rest_base  +  x for x in _DVINE_DAYS[31:] ]
 
 
-
 class dmoon:
-    strat = dmoon
+    strat = strats.dmoon
     entry_point_base = ["dmoon"] + strat.default_args + []
 
 class dmoon_adhoc(dmoon):
-    discord_webhook_url = dmoon_adhoc.webhook_url
+    discord_webhook_url = discords.dmoon_adhoc.webhook_url
 
     common_args = ['--universe-name', 'crypto']
     entry_point_base = dmoon.entry_point_base + common_args + [
             '--discord-webhook-url', discord_webhook_url]
 
     entry_point = entry_point_base
-
-class dmoon_adhoc_3s(dmoon_adhoc):
-    account = Alpaca.play_time
-    alpaca_args = get_alpaca_args(account)
-    entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
-            '--period-span-value', 10.0,
-            '--period-span-units', 'Sec',
-            '--bot-name', 'dmoon_adhoc_3s',
-            '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 3,
-            '--exit-signal-look-back-periods', 2 ]
-
 
 class dmoon_adhoc_dev(dmoon_adhoc):
     account = Alpaca.play_time
@@ -222,25 +209,14 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--entry-signal-look-back-periods', 30, #10
             '--exit-signal-look-back-periods', 5 ] #6
 
+dmoon_adhoc_dev.chart_all_returns_cmds = get_chart_cmd_series(
+            'dmoon_adhoc_dev',
+            dmule_chart.entry_point,
+            chart_all_returns.base_args +
+                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) + [
+                    '--orders-series', 'param',
+                    '--orders-exclusion-max', 0.1,
+                    '--orders-exclusion-min', -0.035,
+                    '--from-date', '2022-08-19T00:00:00'],
+            dmoon_adhoc.discord_webhook_url)
 
-class dmoon_adhoc_5m(dmoon_adhoc):
-    account = Alpaca.play_time
-    alpaca_args = get_alpaca_args(account)
-    entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
-            '--period-span-value', 5,
-            '--period-span-units', 'Min',
-            '--bot-name', 'dmoon_adhoc_5m',
-            '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 7,
-            '--exit-signal-look-back-periods', 3 ]
-
-class dmoon_adhoc_1m(dmoon_adhoc):
-    account = Alpaca.dmoon_alpha
-    alpaca_args = get_alpaca_args(account)
-    entry_point = dmoon_adhoc.entry_point_base +  alpaca_args +[
-            '--period-span-value', 1,
-            '--period-span-units', 'Min',
-            '--bot-name', 'dmoon_adhoc_1m',
-            '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 2,
-            '--exit-signal-look-back-periods', 2 ]

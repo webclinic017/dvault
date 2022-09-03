@@ -5,7 +5,7 @@ import os
 import sys
 import subprocess
 import inspect
-from pprint import pprint
+from pprint import pformat
 from shlex import quote
 from dvault.common_utils import (format_date, parse_date, add_cmd_line_args,
         append_cmd_history, list_from_strings)
@@ -40,7 +40,8 @@ def _get_class(
         if obj_class_name == class_name:
             obj_class = cur_obj_class
     if obj_class is None:
-        raise Exception(f"Could not find obj: {class_name} in {all_names}")
+        all_names = pformat(all_names).replace("'","")
+        raise Exception(f"Could not find class: '{class_name}' in module '{module_name}' from:\n{all_names}")
 
     return obj_class
 
@@ -61,7 +62,7 @@ def _run(
             entries = [ x for x in obj_class.__dict__.keys() if not x.startswith("_") ]
             entries = str(entries).replace("'","")
             raise AttributeError(
-                    "Entry: '" + entry_name + "' not found in " + str(entries))
+                    "Entry: '" + entry_name + "' not found in " + pformat(entries).replace("'",""))
 
         is_list = isinstance(cmd, list)
         if not is_list:
