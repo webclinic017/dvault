@@ -220,3 +220,13 @@ dmoon_adhoc_dev.chart_all_returns_cmds = get_chart_cmd_series(
                     '--from-date', '2022-08-19T00:00:00'],
             dmoon_adhoc.discord_webhook_url)
 
+# recent returns is next up for dev! stopped here when making charts
+# dmoon_adhoc_dev.chart_recent_returns_cmds = get_chart_cmd_series(
+#             'dmoon_adhoc_dev',
+#             dmule_chart.entry_point,
+#             chart_recent_returns.base_args +
+#                 get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) + [
+#                     '--orders-series', 'param',
+#                     '--from-date', '2022-08-19T00:00:00'],
+#             dmoon_adhoc.discord_webhook_url)
+#
