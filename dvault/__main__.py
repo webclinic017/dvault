@@ -83,7 +83,6 @@ def _run(
                 else:
                     _check_call(dry_run, [str(x) for x in cur_cmd+passed_args])
             else:
-                print(1,cur_cmd,2,passed_args)
                 print(" ".join([quote(str(x)) for x in cur_cmd+passed_args]))
     else:
         raise Exception(f"No actions to take with {bot_name}")
