@@ -1,13 +1,13 @@
 import itertools
-from dvault.strats import (Dvine, Dmoon)
+from dvault.strats import (dvine, dmoon)
 from dvault.accounts import (Alpaca,get_alpaca_args)
 from dvault.discords import (dmoon_adhoc, dvine_5pct, dvine_2pct)
 from dvault._charts import (get_chart_cmd_series, dmule_chart, chart_all_returns,
-        get_chart_base_args)
+        get_chart_base_args, chart_recent_returns)
 
 
 class dvine_us_equity:
-    strat = Dvine
+    strat = dvine
     entry_point_base = ["dvine"] + strat.default_args + [
             '--log-level', 'INFO',
             '--strategy-bet-size-usd', 100 ]
@@ -144,14 +144,6 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_2Pct'])
 
-dvine_us_equity_2Pct.chart_all_returns_cmds = get_chart_cmd_series(
-            'dvine_us_equity_2Pct',
-            dmule_chart.entry_point,
-            chart_all_returns.base_args +
-                get_chart_base_args(dvine_us_equity_2Pct, dvine_us_equity.strat) + [
-                    '--from-date', '2022-08-03T00:00:00'],
-            dvine_2pct.webhook_url)
-
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
 
@@ -180,13 +172,22 @@ dvine_us_equity_5Pct.chart_all_returns_cmds = get_chart_cmd_series(
                     '--from-date', '2022-08-19T00:00:00'],
             dvine_5pct.webhook_url)
 
+dvine_us_equity_5Pct.chart_recent_returns_cmds = get_chart_cmd_series(
+            'dvine_us_equity_5Pct',
+            dmule_chart.entry_point,
+            chart_recent_returns.base_args +
+                get_chart_base_args(dvine_us_equity_5Pct, dvine_us_equity.strat) + [
+                    '--orders-series', 'param',
+                    '--from-date', '2022-08-19T00:00:00'],
+            dvine_5pct.webhook_url)
+
 dvine_us_equity_5Pct.compute_orders_cmds = [
         dvine_us_equity_5Pct.rest_base  +  x for x in _DVINE_DAYS[31:] ]
 
 
 
 class dmoon:
-    strat = Dmoon
+    strat = dmoon
     entry_point_base = ["dmoon"] + strat.default_args + []
 
 class dmoon_adhoc(dmoon):

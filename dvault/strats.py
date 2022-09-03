@@ -1,6 +1,6 @@
 from dvault.accounts import (Alpaca, get_alpaca_data_args)
 
-class Dvine:
+class dvine:
     homepage = "https://github.com/AlwaysTraining/dvine"
     base_args = get_alpaca_data_args()
     default_args = base_args + [
@@ -12,7 +12,7 @@ class Dvine:
 
 
 
-class Dmoon:
+class dmoon:
     homepage = "https://github.com/AlwaysTraining/dmoon"
     base_args = get_alpaca_data_args()
     default_args = base_args + [

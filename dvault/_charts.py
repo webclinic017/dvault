@@ -17,6 +17,7 @@ def get_chart_base_args(bot,chart_name):
             bot.alpaca_args + \
             [
                 '--bot-name', bot.__name__,
+                '--strategy-name', bot.strat.__name__
                 ]
 
 def get_chart_cmd_series(name, entry_point, base_args, discord_webhook_url):
