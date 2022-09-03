@@ -11,7 +11,7 @@ from dvault.common_utils import (format_date, parse_date, add_cmd_line_args,
         append_cmd_history, list_from_strings)
 from dvault.log_msg import (LogMsg)
 # the following must be here for the module lookup by name to work
-from dvault import (bots, charts, accounts, strats, utils)
+from dvault import (bots, charts, accounts, strats, utils, legacy_dvine_charts)
 
 def _call(dry_run, cmd):
     logging.info(LogMsg(" ".join([quote(str(x)) for x in cmd])))

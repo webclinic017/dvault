@@ -1,4 +1,13 @@
 
+# Generic chart functionality, shared between bots and charts modules
+#
+# in general i am now trying to put logic for charts into the most
+# appropriate 'module', bot charts in 'bots', strat charts in 'strats', and
+# then overall charts in 'charts'
+#
+# These all need similar helper functions as they all use dmule (at the moment)
+# so that common chart logic lives here
+
 from os import path
 import random
 import string
