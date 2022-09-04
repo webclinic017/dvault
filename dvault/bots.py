@@ -144,7 +144,9 @@ class dvine_us_equity_3Pct(dvine_us_equity):
             '--chart-type', 'orders'
             ] + alpaca_args + from_date_args
 
-    upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
+    prod_upgrade_cmds = _get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None},
             "~/.dvine_versions/v2.2" )
 
@@ -176,7 +178,9 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_2Pct'])
 
-    upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
+    prod_upgrade_cmds = _get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None},
             "~/.dvine_versions/v2.2" )
 
@@ -210,7 +214,9 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--bot-name', 'dvine_us_equity_5Pct'])
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
-    upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None} )
+    prod_upgrade_cmds = _get_upgrade_cmd(
             {'dmark':None, 'dvine':"mark_refactor", 'dvault': None},
             "~/.dvine_versions/mark_refactor" )
 
