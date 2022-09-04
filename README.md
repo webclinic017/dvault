@@ -9,7 +9,10 @@
 
 ***This ain't your daddy's configuration managment system***
 
-Buy, using a bracket order a list of tickers for a given bet size
+Did you ever want to use substitution in a coniguration language.  Json won't
+do it, you have to bolt your own stuf on.  YAML offers anchors they are OK but
+    to move to multiple files, you are now bolting your own stuf on.  What
+    about python?  We can just code our configuration in python! why not?
 
 
 ## Development environment
