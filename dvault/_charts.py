@@ -68,6 +68,6 @@ class chart_all_returns:
 
 class chart_recent_returns:
     base_args = chart_orders.base_args + [
-            '--orders-max-spam', 2,
+            '--orders-max-spam', 20,
             '--orders-with-fill-after', 'now' ]
 
