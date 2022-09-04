@@ -213,7 +213,10 @@ dmoon_adhoc_dev.chart_all_returns_cmds = get_chart_cmd_series(
             'dmoon_adhoc_dev',
             dmule_chart.entry_point,
             chart_all_returns.base_args +
-                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) + [
+                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) +
+                dmoon_adhoc.common_args + [
+                    '--orders-candle-unit', 'Min',
+                    '--orders-candle-value', 1,
                     '--orders-series', 'param',
                     '--orders-exclusion-max', 0.1,
                     '--orders-exclusion-min', -0.035,
@@ -221,12 +224,17 @@ dmoon_adhoc_dev.chart_all_returns_cmds = get_chart_cmd_series(
             dmoon_adhoc.discord_webhook_url)
 
 # recent returns is next up for dev! stopped here when making charts
-# dmoon_adhoc_dev.chart_recent_returns_cmds = get_chart_cmd_series(
-#             'dmoon_adhoc_dev',
-#             dmule_chart.entry_point,
-#             chart_recent_returns.base_args +
-#                 get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) + [
-#                     '--orders-series', 'param',
-#                     '--from-date', '2022-08-19T00:00:00'],
-#             dmoon_adhoc.discord_webhook_url)
-#
+dmoon_adhoc_dev.chart_recent_returns_cmds = get_chart_cmd_series(
+            'dmoon_adhoc_dev',
+            dmule_chart.entry_point,
+            chart_recent_returns.base_args +
+                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) +
+                dmoon_adhoc.common_args + [
+                    '--orders-candle-unit', 'Min',
+                    '--orders-candle-value', 1,
+                    '--orders-series', 'param',
+                    '--orders-exclusion-max', 0.1,
+                    '--orders-exclusion-min', -0.035,
+                    '--from-date', '2022-08-19T00:00:00'],
+            dmoon_adhoc.discord_webhook_url)
+
