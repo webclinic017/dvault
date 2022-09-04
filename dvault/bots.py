@@ -158,7 +158,7 @@ def _get_chart_cmds(bot, chart, custom=[]):
             bot.discord_webhook_url)
 
 def _get_systemd_cmd(command, bot):
-    return ['systemctl', command, bot.__name__, '--user']
+    return ['systemctl', command, bot if bot isinstance(string) else bot.__name__, '--user']
 
 def _get_upgrade_cmd(packages):
     if isinstance(packages, list):
@@ -240,9 +240,8 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--exit-signal-look-back-periods', 5 ] #6
 
 dmoon_adhoc_dev.upgrade_cmds = [
-        ['which','pip'],
         _get_upgrade_cmd([ 'dmark', 'dmule', 'dmoon', 'dvault']),
-        _get_systemd_cmd('restart',dmoon_adhoc_dev) ]
+        _get_systemd_cmd('restart', 'dmoon_adhoc') ]
 
 dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
         dmoon_adhoc_dev, chart_all_returns, [
