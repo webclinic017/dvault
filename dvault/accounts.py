@@ -23,16 +23,18 @@ class Alpaca:
     class dvine_us_equity_5Pct:
         # retried 2022-08-03
         # revived 2022-08-19
+        # reset 2022-09-04
         email = "derrick.karimi+dvine_us_equity_5Pct@gmail.com"
-        api_key = "PKN2HVDT8XUQC6L5HUFW"
-        api_secret_key = "8bJ3gldCMjqHHlDA1tR5Y3LeGwZE98Be4KoHmfok"
+        api_key = "PK2ZN7V6XG1E1WQKEK6D"
+        api_secret_key = "1qRnTszQV1O8jttgRwZfv3cVyA4LQJGC0jA21F4z"
         base_url = "https://paper-api.alpaca.markets"
 
 
     class play_time:
+        # last reset 2022-09-04
         email = "derrick.karimi+dvine_fractionable_universe_3Hour@gmail.com"
-        api_key = "PKWUTY2MVSFNS651YH7C"
-        api_secret_key = "VfyHJzCZb1sVpsVIDCvwKk7FGM3EmG5RYEpjdAPo"
+        api_key = "PKOTG5ONER38XLTMHG2E"
+        api_secret_key = "HUC2nbmIbKQI583nXq0bRWhB11AzV25y5CUakh4H"
         base_url = "https://paper-api.alpaca.markets"
 
     class dmoon_alpha:

@@ -262,8 +262,8 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--period-span-units', 'Min',
             '--bot-name', 'dmoon_adhoc_dev',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 30, #10
-            '--exit-signal-look-back-periods', 5 ] #6
+            '--entry-signal-look-back-periods', 30,
+            '--exit-signal-look-back-periods', 2 ]
 
     dev_upgrade_cmds = _get_upgrade_cmd(dmoon.packages)
     prod_upgrade_cmds = [
