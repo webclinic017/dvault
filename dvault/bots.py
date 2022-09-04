@@ -196,6 +196,10 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--bot-name', 'dvine_us_equity_5Pct'])
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
+    upgrade_cmds = [
+        _get_upgrade_cmd({'dmark':None, 'dmule':None, 'dvine':"mark_refactor"}),
+        _get_systemd_cmd('restart', 'dvine_us_equity_5Pct') ]
+
 
 dvine_us_equity_5Pct.chart_all_returns_cmds = _get_chart_cmds(
         dvine_us_equity_5Pct, chart_all_returns, [
@@ -240,7 +244,7 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--entry-signal-look-back-periods', 30, #10
             '--exit-signal-look-back-periods', 5 ] #6
 
-dmoon_adhoc_dev.upgrade_cmds = [
+    upgrade_cmds = [
         _get_upgrade_cmd([ 'dmark', 'dmule', 'dmoon', 'dvault']),
         _get_systemd_cmd('restart', 'dmoon_adhoc') ]
 
