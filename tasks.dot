@@ -3,105 +3,140 @@
  */
 digraph G {
 
-  graph [fontname = "Handlee"];
-  node [fontname = "Handlee" shape=note style=filled color=goldenrod];
-  edge [fontname = "Handlee"];
-  rankdir=LR;
-  style="rounded"
-  compound=true
+graph [fontname = "Handlee"];
+node [fontname = "Handlee" shape=note style=filled color=goldenrod];
+edge [fontname = "Handlee"];
+rankdir=LR;
+style="rounded"
+compound=true
+
+
+subgraph cluster_main{
+  // label="Quathar"
+
+subgraph cluster_ideas{
+  label="ideas"
+  node [style=none shape=oval color=orange]
+  log_return_recursive_filter_percentiles_matcher
+}
+
+subgraph cluster_dev {
+  label="Development"
+
+  node[shape=none]
+
+  subgraph cluster_epic{
+    
+    label="epic: combined paper account"
+    epic[label="" style="invisible"]
+
+    // UNDERWAY
+    node[fontname = "Handlee" shape=note style=filled color=orange]
+
+    mark_refactor_to_master->update_5Pct_to_master
+
+    update_5Pct_to_master->babysit_5Pct_master_deployment
+    babysit_5Pct_master_deployment->combined_paper_acct
+    
+    dvine_assurance[
+        label=<
+        <B><U>dvine_assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [x] check 2Pct
+        <BR ALIGN="LEFT"/> [x] check 3Pct
+        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
+        <BR ALIGN="LEFT"/>
+        >]
+
+    dvine_assurance->mark_refactor_to_master
+
+    dvine_chart_assurance[
+        label=<
+        <B><U>dvine_chart assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] check discord channels
+        <BR ALIGN="LEFT"/> [ ] check for journalctl exceptions
+        <BR ALIGN="LEFT"/>
+        >]
+
+
+    
+    
+
+    dvine_purge_assurance[
+        label=<
+        <B><U>dvine_purge_assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] check 2Pct
+        <BR ALIGN="LEFT"/> [ ] check 3Pct
+        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
+        <BR ALIGN="LEFT"/>
+        >]
+
+    redeploy_commands
+
+    // TODO
+    node [fontname = "Handlee" shape=note style=filled color=goldenrod]
+
+    plan_how_to_trade_multiple_streaming_bots->create_second_streaming_bot
+    dvine_purge_assurance->mark_refactor_to_master
+    dmoon_assurance->combined_paper_acct
+
+    dmule_chart->combined_paper_acct
+
+    clean_positions_form_3Pct
+
+    reset_dvine_5Pct->dvine_assurance
+    reset_dvine_5Pct->dvine_purge_assurance
+    redeploy_commands->reset_dvine_5Pct
+
+    
+    dmoon_backtest->doon_pos_epxectency
+
+
+    
+
+
+  }
+
+
+  subgraph cluster_next_epic{
+    label="epic: live trading account"
+
+    live_trade[shape=diamond color=violet]
+
+    node[shape=none]
+    next_epic[label="" style="invisible"]
+  }
+}
+
+epic->next_epic
 
 
 
+//placeholder_2
 
-
-    subgraph cluster_main{
-        // label="Quathar"
-
-    subgraph cluster_ideas{
-        label="ideas"
-        node [style=none shape=oval color=orange]
-        log_return_recursive_filter_percentiles_matcher
-    }
-
-    subgraph cluster_dev {
-        label="Development"
-
-
-        subgraph cluster_epic{
-            label="epic: combined paper account"
-
-            node[shape=none]
-
-
-            mark_refactor_to_master->update_5Pct_to_master
-
-            update_5Pct_to_master->babysit_5Pct_master_deployment
-            babysit_5Pct_master_deployment->combined_paper_acct
-
-            plan_how_to_trade_multiple_streaming_bots->create_second_streaming_bot
-            dvine_assurance[xlabel="[x] 3Pct \n[x] 2Pct  \n[-] 5Pct  "]
-            dvine_assurance->mark_refactor_to_master
-
-            dvine_chart_assurance[
-                xlabel="[ ] get 2 x v2.2 bots discords on or ater 9/6"]
-            dvine_chart_assurance->mark_refactor_to_master
-            dvine_purge_assurance[xlabel="[x] 3Pct \n[x] 2Pct  \n[ ] 5Pct  "]
-            dvine_purge_assurance->mark_refactor_to_master
-            dmoon_assurance->combined_paper_acct
-
-            dmule_chart->combined_paper_acct
-
-            clean_positions_form_3Pct
-
-            clean_positions_form_5Pct->mark_refactor_to_master
-
-
-            doon_backtest->doon_pos_epxectency
-
-
-            epic[label="" style="invisible"]
-
-
-        }
-
-
-        subgraph cluster_next_epic{
-            label="epic: live trading account"
-
-            live_trade[shape=diamond color=violet]
-
-            node[shape=none]
-            next_epic[label="" style="invisible"]
-        }
-    }
-
-    epic->next_epic
-
-
-
-    //placeholder_2
-
-    } //cluster_
+} //cluster_
 
 /*
-  subgraph cluster_flegend{
-  subgraph cluster_legend{
-        label="legend"
-        bgcolor=transparent;
-        fontsize=24
-    idea [style=none shape=oval color=orange]
-    todo [fontname = "Handlee" shape=note style=filled color=goldenrod];
-    done [fontname = "Handlee" shape=note style=filled color=green];
-    underway [fontname = "Handlee" shape=note style=filled color=orange];
-    bug [fontname = "Handlee" shape=note style=filled color=red];
-    goal [shape=diamond color=violet]
+subgraph cluster_flegend{
+subgraph cluster_legend{
+  label="legend"
+  bgcolor=transparent;
+  fontsize=24
+idea [style=none shape=oval color=orange]
+todo [fontname = "Handlee" shape=note style=filled color=goldenrod];
+done [fontname = "Handlee" shape=note style=filled color=green];
+underway [fontname = "Handlee" shape=note style=filled color=orange];
+bug [fontname = "Handlee" shape=note style=filled color=red];
+goal [shape=diamond color=violet]
 
-    todo->done[style=invis,] // for layout
-    idea->underway[style=invis,] // for layout
+todo->done[style=invis,] // for layout
+idea->underway[style=invis,] // for layout
 
 
-  }
-  }
+}
+}
 */
 
 
