@@ -30,9 +30,27 @@ subgraph cluster_dev {
     label="epic: combined paper account"
     epic[label="" style="invisible"]
 
+    // DONE
+    node[fontname = "Handlee" shape=note style=filled color=green];
+    
+    reset_dvine_5Pct
+    
     // UNDERWAY
     node[fontname = "Handlee" shape=note style=filled color=orange]
 
+    plan_how_to_trade_multiple_streaming_bots
+    dmoon_backtest[
+        label=<
+        <B><U>dmoon_backtest</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] clean out pasted code
+        <BR ALIGN="LEFT"/> [ ] solve streaming broker polymorphism
+        <BR ALIGN="LEFT"/> [ ] profit
+        <BR ALIGN="LEFT"/>
+        >]
+    
+    // TODO
+    node [fontname = "Handlee" shape=note style=filled color=goldenrod];
     mark_refactor_to_master->update_5Pct_to_master
 
     update_5Pct_to_master->babysit_5Pct_master_deployment
@@ -52,7 +70,7 @@ subgraph cluster_dev {
 
     dvine_chart_assurance[
         label=<
-        <B><U>dvine_chart assurance</U></B>
+        <B><U>dvine_chart_assurance</U></B>
         <BR/>
         <BR ALIGN="LEFT"/> [ ] check discord channels
         <BR ALIGN="LEFT"/> [ ] check for journalctl exceptions
@@ -73,7 +91,7 @@ subgraph cluster_dev {
         <BR ALIGN="LEFT"/>
         >]
 
-    redeploy_commands
+    
 
     // TODO
     node [fontname = "Handlee" shape=note style=filled color=goldenrod]
@@ -88,11 +106,10 @@ subgraph cluster_dev {
 
     reset_dvine_5Pct->dvine_assurance
     reset_dvine_5Pct->dvine_purge_assurance
-    redeploy_commands->reset_dvine_5Pct
 
+    dvine_chart_assurance->mark_refactor_to_master
     
     dmoon_backtest->doon_pos_epxectency
-
 
     
 
@@ -147,5 +164,4 @@ idea->underway[style=invis,] // for layout
 
 
 }
-
 
