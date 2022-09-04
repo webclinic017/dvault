@@ -64,10 +64,10 @@ class chart_accounts:
 
 class chart_all_returns:
     base_args = chart_orders.base_args + [
-            '--orders-max-spam', 20 ]
+            '--orders-max-spam', 10 ]
 
 class chart_recent_returns:
     base_args = chart_orders.base_args + [
-            '--orders-max-spam', 20,
+            '--orders-max-spam', 10,
             '--orders-with-fill-after', 'now' ]
 
