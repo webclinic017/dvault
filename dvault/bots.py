@@ -94,6 +94,28 @@ def _get_purge_args(purge_base, postfix_args=[]):
             purge_positions_cmd + postfix_args ]
     return purge_cmds
 
+def _get_systemd_cmd(command, bot):
+    service_name = bot if isinstance(bot, str) else bot.__name__
+    return ['systemctl', command, service_name, '--user']
+
+def _get_upgrade_cmd(packages):
+    if isinstance(packages, list):
+        pdict = {}
+        for cur_package in packages:
+            pdict[cur_package] = None
+        packages = pdict
+
+    upgrade_toks = []
+    for package, version in packages.items():
+        upgrade_toks += \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git@{version}"] \
+            if version else \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
+
+    return ['pip', 'install'] + upgrade_toks + ['--upgrade']
+
+
+
 
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
@@ -115,6 +137,9 @@ class dvine_us_equity_3Pct(dvine_us_equity):
     orders_table_cmd = ['dmule_table',
             '--chart-type', 'orders'
             ] + alpaca_args + from_date_args
+
+    upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
 
 
 
@@ -144,6 +169,9 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_2Pct'])
 
+    upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
+
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
 
@@ -156,28 +184,6 @@ def _get_chart_cmds(bot, chart, custom=[]):
             chart_all_returns.base_args + get_chart_base_args(
                 bot, bot.strat) + custom,
             bot.discord_webhook_url)
-
-def _get_systemd_cmd(command, bot):
-    service_name = bot if isinstance(bot, str) else bot.__name__
-    return ['systemctl', command, service_name, '--user']
-
-def _get_upgrade_cmd(packages):
-    if isinstance(packages, list):
-        pdict = {}
-        for cur_package in packages:
-            pdict[cur_package] = None
-        packages = pdict
-
-    upgrade_toks = []
-    for package, version in packages.items():
-        upgrade_toks += \
-            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git@{version}"] \
-            if version else \
-            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
-
-    return ['pip', 'install'] + upgrade_toks + ['--upgrade']
-
-
 
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
