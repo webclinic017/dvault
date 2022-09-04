@@ -47,6 +47,7 @@ def get_chart_cmd_series(name, entry_point, base_args, discord_webhook_url):
 
     return [pre_clean, create_dir, gen_chart, notify, cleanup ]
 
+
 class dvine_chart:
     entry_point = ["dvine_chart"]
 
@@ -58,7 +59,7 @@ class chart_orders:
             '--chart-type', 'orders',
             '--with-order-status', 'filled' ]
 
-class chart_accounts:
+class chart_performance:
     base_args = [
             '--chart-type', 'accounts' ]
 

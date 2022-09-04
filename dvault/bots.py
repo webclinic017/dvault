@@ -3,7 +3,7 @@ from dvault import strats
 from dvault import discords
 from dvault.accounts import (Alpaca,get_alpaca_args)
 from dvault._charts import (get_chart_cmd_series, dmule_chart, chart_all_returns,
-        get_chart_base_args, chart_recent_returns)
+        get_chart_base_args, chart_recent_returns, chart_performance)
 
 
 class dvine_us_equity:
@@ -147,6 +147,17 @@ class dvine_us_equity_2Pct(dvine_us_equity):
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
 
+
+def _get_chart_cmds(bot, chart, custom=[]):
+    """get charting commands for any dvine bot"""
+    return get_chart_cmd_series(
+            bot.__name__,
+            dmule_chart.entry_point,
+            chart_all_returns.base_args + get_chart_base_args(
+                bot, bot.strat) + custom,
+            bot.discord_webhook_url)
+
+
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
     alpaca_args = get_alpaca_args(account)
@@ -162,24 +173,23 @@ class dvine_us_equity_5Pct(dvine_us_equity):
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
     purge_cmds = _get_purge_args(purge_base, [
             '--bot-name', 'dvine_us_equity_5Pct'])
+    discord_webhook_url = discords.dvine_5pct.webhook_url
 
-dvine_us_equity_5Pct.chart_all_returns_cmds = get_chart_cmd_series(
-            'dvine_us_equity_5Pct',
-            dmule_chart.entry_point,
-            chart_all_returns.base_args +
-                get_chart_base_args(dvine_us_equity_5Pct, dvine_us_equity.strat) + [
-                    '--orders-series', 'param',
-                    '--from-date', '2022-08-19T00:00:00'],
-            discords.dvine_5pct.webhook_url)
 
-dvine_us_equity_5Pct.chart_recent_returns_cmds = get_chart_cmd_series(
-            'dvine_us_equity_5Pct',
-            dmule_chart.entry_point,
-            chart_recent_returns.base_args +
-                get_chart_base_args(dvine_us_equity_5Pct, dvine_us_equity.strat) + [
-                    '--orders-series', 'param',
-                    '--from-date', '2022-08-19T00:00:00'],
-            discords.dvine_5pct.webhook_url)
+dvine_us_equity_5Pct.chart_all_returns_cmds = _get_chart_cmds(
+        dvine_us_equity_5Pct, chart_all_returns, [
+            '--orders-series', 'param',
+            '--from-date', '2022-08-19T00:00:00'])
+
+dvine_us_equity_5Pct.chart_recent_returns_cmds = _get_chart_cmds(
+        dvine_us_equity_5Pct, chart_recent_returns, [
+            '--orders-series', 'param',
+            '--from-date', '2022-08-19T00:00:00'])
+
+dvine_us_equity_5Pct.chart_performance_cmds = _get_chart_cmds(
+        dvine_us_equity_5Pct, chart_performance, [
+            '--orders-series', 'param',
+            '--from-date', '2022-08-19T00:00:00'])
 
 dvine_us_equity_5Pct.compute_orders_cmds = [
         dvine_us_equity_5Pct.rest_base  +  x for x in _DVINE_DAYS[31:] ]
@@ -209,32 +219,25 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--entry-signal-look-back-periods', 30, #10
             '--exit-signal-look-back-periods', 5 ] #6
 
-dmoon_adhoc_dev.chart_all_returns_cmds = get_chart_cmd_series(
-            'dmoon_adhoc_dev',
-            dmule_chart.entry_point,
-            chart_all_returns.base_args +
-                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) +
-                dmoon_adhoc.common_args + [
-                    '--orders-candle-unit', 'Min',
-                    '--orders-candle-value', 1,
-                    '--orders-series', 'param',
-                    '--orders-exclusion-max', 0.1,
-                    '--orders-exclusion-min', -0.035,
-                    '--from-date', '2022-08-19T00:00:00'],
-            dmoon_adhoc.discord_webhook_url)
+dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
+        dmoon_adhoc_dev, chart_all_returns, [
+            '--orders-candle-unit', 'Min',
+            '--orders-candle-value', 1,
+            '--orders-series', 'param',
+            '--orders-exclusion-max', 0.1,
+            '--orders-exclusion-min', -0.035,
+            '--from-date', '2022-08-19T00:00:00'])
 
-# recent returns is next up for dev! stopped here when making charts
-dmoon_adhoc_dev.chart_recent_returns_cmds = get_chart_cmd_series(
-            'dmoon_adhoc_dev',
-            dmule_chart.entry_point,
-            chart_recent_returns.base_args +
-                get_chart_base_args(dmoon_adhoc_dev, dmoon.strat) +
-                dmoon_adhoc.common_args + [
-                    '--orders-candle-unit', 'Min',
-                    '--orders-candle-value', 1,
-                    '--orders-series', 'param',
-                    '--orders-exclusion-max', 0.1,
-                    '--orders-exclusion-min', -0.035,
-                    '--from-date', '2022-08-19T00:00:00'],
-            dmoon_adhoc.discord_webhook_url)
+dmoon_adhoc_dev.chart_recent_returns_cmds = _get_chart_cmds(
+        dmoon_adhoc_dev, chart_recent_returns, [
+            '--orders-candle-unit', 'Min',
+            '--orders-candle-value', 1,
+            '--orders-series', 'param',
+            '--orders-exclusion-max', 0.1,
+            '--orders-exclusion-min', -0.035,
+            '--from-date', '2022-08-19T00:00:00'])
+
+dmoon_adhoc_dev.chart_performance_cmds = _get_chart_cmds(
+        dmoon_adhoc_dev, chart_performance, [
+            '--from-date', '2022-08-19T00:00:00'])
 

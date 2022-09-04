@@ -78,27 +78,3 @@ class dmule_chart_all_strat_returns(chart_all_returns):
                 ],
             discord_webhook_url)
 
-class dmule_chart_dmoon_adhoc_dev:
-    bot = bots.dmoon_adhoc_dev
-    discord_webhook_url = bot.discord_webhook_url
-    from_date_args = [
-            '--from-date', '2022-08-18T00:00:00',
-            '--to-date', datetime.now().replace(microsecond=0).isoformat(),
-            '--orders-series', 'tikr',
-            ]
-
-    base_args = get_chart_tmp_args("dmule_chart_dmoon_adhoc_dev") + get_chart_base_args(bot, "dmule_chart_dmoon_adhoc_dev") + bot.common_args
-
-
-class dmule_chart_dmoon_adhoc_dev_all_returns(dmule_chart_dmoon_adhoc_dev):
-
-    discord_webhook_url = dstock_dspam.webhook_url
-    entry_point = get_chart_cmd_series(
-            'dmule_chart_dmoon_adhoc_dev_all_returns',
-            dmule_chart.entry_point,
-            chart_all_returns.base_args +
-                dmule_chart_dmoon_adhoc_dev.bot.strat.base_args +
-                dmule_chart_dmoon_adhoc_dev.base_args +
-                dmule_chart_dmoon_adhoc_dev.from_date_args,
-            dmule_chart_dmoon_adhoc_dev.discord_webhook_url)
-
