@@ -158,7 +158,7 @@ def _get_chart_cmds(bot, chart, custom=[]):
             bot.discord_webhook_url)
 
 def _get_systemd_cmd(command, bot):
-    service_name = bot if isinstance(bot, string) else bot.__name__
+    service_name = bot if isinstance(bot, str) else bot.__name__
     return ['systemctl', command, service_name, '--user']
 
 def _get_upgrade_cmd(packages):
