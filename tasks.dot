@@ -26,17 +26,18 @@ subgraph cluster_dev {
   node[shape=none]
 
   subgraph cluster_epic{
+    
     label="epic: combined paper account"
+    epic[label="" style="invisible"]
 
-
+    // UNDERWAY
+    node[fontname = "Handlee" shape=note style=filled color=orange]
 
     mark_refactor_to_master->update_5Pct_to_master
 
     update_5Pct_to_master->babysit_5Pct_master_deployment
     babysit_5Pct_master_deployment->combined_paper_acct
-
-    plan_how_to_trade_multiple_streaming_bots->create_second_streaming_bot
-
+    
     dvine_assurance[
         label=<
         <B><U>dvine_assurance</U></B>
@@ -47,20 +48,37 @@ subgraph cluster_dev {
         <BR ALIGN="LEFT"/>
         >]
 
-    dvine_assurance[xlabel="[x] 3Pct \n[x] 2Pct  \n[-] 5Pct  "]
     dvine_assurance->mark_refactor_to_master
 
     dvine_chart_assurance[
         label=<
         <B><U>dvine_chart assurance</U></B>
         <BR/>
-        <BR ALIGN="LEFT"/> [ ] check 2PCt, 3Pct bots after 9/6
         <BR ALIGN="LEFT"/> [ ] check discord channels
         <BR ALIGN="LEFT"/> [ ] check for journalctl exceptions
         <BR ALIGN="LEFT"/>
         >]
 
 
+    
+    
+
+    dvine_purge_assurance[
+        label=<
+        <B><U>dvine_purge_assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] check 2Pct
+        <BR ALIGN="LEFT"/> [ ] check 3Pct
+        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
+        <BR ALIGN="LEFT"/>
+        >]
+
+    redeploy_commands
+
+    // TODO
+    node [fontname = "Handlee" shape=note style=filled color=goldenrod]
+
+    plan_how_to_trade_multiple_streaming_bots->create_second_streaming_bot
     dvine_purge_assurance->mark_refactor_to_master
     dmoon_assurance->combined_paper_acct
 
@@ -68,13 +86,15 @@ subgraph cluster_dev {
 
     clean_positions_form_3Pct
 
-    clean_positions_form_5Pct->mark_refactor_to_master
+    reset_dvine_5Pct->dvine_assurance
+    reset_dvine_5Pct->dvine_purge_assurance
+    redeploy_commands->reset_dvine_5Pct
+
+    
+    dmoon_backtest->doon_pos_epxectency
 
 
-    doon_backtest->doon_pos_epxectency
-
-
-    epic[label="" style="invisible"]
+    
 
 
   }
