@@ -21,13 +21,5 @@ setup(name='dvault',
           },
       install_requires=requirements,
       zip_safe=False,
-      package_data={
-          'dvault_deploy': [
-              'dvault.service.template',
-              'dvault.timer.template'
-              ],
-          'dvault_chart': [
-              'email.html.template'
-              ]
-          }
+      scripts=['venv_launch.sh']
       )

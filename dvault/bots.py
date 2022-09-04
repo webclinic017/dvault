@@ -1,3 +1,6 @@
+import sys
+import os
+from os import path
 import itertools
 from dvault import strats
 from dvault import discords
@@ -98,7 +101,7 @@ def _get_systemd_cmd(command, bot):
     service_name = bot if isinstance(bot, str) else bot.__name__
     return ['systemctl', command, service_name, '--user']
 
-def _get_upgrade_cmd(packages):
+def _get_upgrade_cmd(packages, venv_dir=None):
     if isinstance(packages, list):
         pdict = {}
         for cur_package in packages:
@@ -112,7 +115,10 @@ def _get_upgrade_cmd(packages):
             if version else \
             [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
 
-    return ['pip', 'install'] + upgrade_toks + ['--upgrade']
+    venv_launch = [] if not venv_dir else \
+            ['venv_launch.sh', path.expandvars(path.expanduser(venv_dir))]
+
+    return venv_launch + ['pip', 'install'] + upgrade_toks + ['--upgrade']
 
 
 
@@ -139,7 +145,8 @@ class dvine_us_equity_3Pct(dvine_us_equity):
             ] + alpaca_args + from_date_args
 
     upgrade_cmds = _get_upgrade_cmd(
-            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None},
+            "~/.dvine_versions/v2.2" )
 
 
 
@@ -170,7 +177,8 @@ class dvine_us_equity_2Pct(dvine_us_equity):
             ['--bot-name', 'dvine_us_equity_2Pct'])
 
     upgrade_cmds = _get_upgrade_cmd(
-            {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
+            {'dmark':None, 'dvine':"v2.2", 'dvault': None},
+            "~/.dvine_versions/v2.2" )
 
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
@@ -203,7 +211,8 @@ class dvine_us_equity_5Pct(dvine_us_equity):
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
     upgrade_cmds = _get_upgrade_cmd(
-            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None} )
+            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None},
+            "~/.dvine_versions/mark_refactor" )
 
 
 dvine_us_equity_5Pct.chart_all_returns_cmds = _get_chart_cmds(
@@ -228,6 +237,7 @@ dvine_us_equity_5Pct.compute_orders_cmds = [
 class dmoon:
     strat = strats.dmoon
     entry_point_base = ["dmoon"] + strat.default_args + []
+    packages = [ 'dmark', 'dmule', 'dmoon', 'dvault']
 
 class dmoon_adhoc(dmoon):
     discord_webhook_url = discords.dmoon_adhoc.webhook_url
@@ -249,8 +259,9 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--entry-signal-look-back-periods', 30, #10
             '--exit-signal-look-back-periods', 5 ] #6
 
-    upgrade_cmds = [
-        _get_upgrade_cmd([ 'dmark', 'dmule', 'dmoon', 'dvault']),
+    dev_upgrade_cmds = _get_upgrade_cmd(dmoon.packages)
+    prod_upgrade_cmds = [
+        _get_upgrade_cmd( dmoon.packages, "~/.dmoon_versions/None" ),
         _get_systemd_cmd('restart', 'dmoon_adhoc') ]
 
 dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
