@@ -23,11 +23,11 @@ subgraph cluster_ideas{
 subgraph cluster_dev {
   label="Development"
 
+  node[shape=none]
 
   subgraph cluster_epic{
     label="epic: combined paper account"
 
-    node[shape=none]
 
 
     mark_refactor_to_master->update_5Pct_to_master
@@ -36,15 +36,31 @@ subgraph cluster_dev {
     babysit_5Pct_master_deployment->combined_paper_acct
 
     plan_how_to_trade_multiple_streaming_bots->create_second_streaming_bot
+
+    dvine_assurance[
+        label=<
+        <B><U>dvine_assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [x] check 2Pct
+        <BR ALIGN="LEFT"/> [x] check 3Pct
+        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
+        <BR ALIGN="LEFT"/>
+        >]
+
     dvine_assurance[xlabel="[x] 3Pct \n[x] 2Pct  \n[-] 5Pct  "]
     dvine_assurance->mark_refactor_to_master
 
-    dvine_chart_assurance[xlabel="
-    [ ] check 2Pct, 3Pct bots after 9/6
-    [ ] check discord channels
-    [ ] check exceptions in logs"]
-    dvine_chart_assurance->mark_refactor_to_master
-    dvine_purge_assurance[xlabel="[x] 3Pct \n[x] 2Pct  \n[ ] 5Pct  "]
+    dvine_chart_assurance[
+        label=<
+        <B><U>dvine_chart assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] check 2PCt, 3Pct bots after 9/6
+        <BR ALIGN="LEFT"/> [ ] check discord channels
+        <BR ALIGN="LEFT"/> [ ] check for journalctl exceptions
+        <BR ALIGN="LEFT"/>
+        >]
+
+
     dvine_purge_assurance->mark_refactor_to_master
     dmoon_assurance->combined_paper_acct
 
