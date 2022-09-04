@@ -157,6 +157,26 @@ def _get_chart_cmds(bot, chart, custom=[]):
                 bot, bot.strat) + custom,
             bot.discord_webhook_url)
 
+def _get_systemd_cmd(command, bot):
+    return ['systemctl', command, bot.__name__, '--user']
+
+def _get_upgrade_cmd(packages):
+    if isinstance(packages, list):
+        pdict = {}
+        for cur_package in packages:
+            pdict[cur_package] = None
+        packages = pdict
+
+    upgrade_toks = []
+    for package, version in packages.items():
+        upgrade_toks += \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git@{version}"] \
+            if version else \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
+
+    return ['pip', 'install'] + upgrade_toks + ['--upgrade']
+
+
 
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
@@ -218,6 +238,11 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--strategy-bet-size-usd', 50000,
             '--entry-signal-look-back-periods', 30, #10
             '--exit-signal-look-back-periods', 5 ] #6
+
+dmoon_adhoc_dev.upgrade_cmds = [
+        ['which','pip'],
+        _get_upgrade_cmd([ 'dmark', 'dmule', 'dmoon', 'dvault']),
+        _get_systemd_cmd('restart',dmoon_adhoc_dev) ]
 
 dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
         dmoon_adhoc_dev, chart_all_returns, [
