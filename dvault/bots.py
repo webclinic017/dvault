@@ -196,7 +196,8 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--bot-name', 'dvine_us_equity_5Pct'])
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
-    upgrade_cmds = _get_upgrade_cmd({'dmark':None, 'dmule':None, 'dvine':"mark_refactor"})
+    upgrade_cmds = _get_upgrade_cmd(
+            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None} )
 
 
 dvine_us_equity_5Pct.chart_all_returns_cmds = _get_chart_cmds(
