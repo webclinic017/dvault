@@ -64,7 +64,7 @@ class chart_accounts:
 
 class chart_all_returns:
     base_args = chart_orders.base_args + [
-            '--orders-max-spam', 1 ]
+            '--orders-max-spam', 20 ]
 
 class chart_recent_returns:
     base_args = chart_orders.base_args + [
