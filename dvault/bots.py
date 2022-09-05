@@ -193,7 +193,7 @@ def _get_chart_cmds(bot, chart, custom=[]):
     return get_chart_cmd_series(
             bot.__name__,
             dmule_chart.entry_point,
-            chart_all_returns.base_args + get_chart_base_args(
+            chart.base_args + get_chart_base_args(
                 bot, bot.strat) + custom,
             bot.discord_webhook_url)
 
@@ -275,8 +275,9 @@ dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
             '--orders-candle-unit', 'Min',
             '--orders-candle-value', 1,
             '--orders-series', 'param',
-            '--orders-exclusion-max', 0.1,
-            '--orders-exclusion-min', -0.035,
+            '--universe-name', 'crypto',
+#           '--orders-exclusion-max', 0.1,
+#           '--orders-exclusion-min', -0.035,
             '--from-date', '2022-08-19T00:00:00'])
 
 dmoon_adhoc_dev.chart_recent_returns_cmds = _get_chart_cmds(
@@ -284,11 +285,13 @@ dmoon_adhoc_dev.chart_recent_returns_cmds = _get_chart_cmds(
             '--orders-candle-unit', 'Min',
             '--orders-candle-value', 1,
             '--orders-series', 'param',
-            '--orders-exclusion-max', 0.1,
-            '--orders-exclusion-min', -0.035,
+            '--universe-name', 'crypto',
+#           '--orders-exclusion-max', 0.1,
+#           '--orders-exclusion-min', -0.035,
             '--from-date', '2022-08-19T00:00:00'])
 
 dmoon_adhoc_dev.chart_performance_cmds = _get_chart_cmds(
         dmoon_adhoc_dev, chart_performance, [
+            '--universe-name', 'crypto',
             '--from-date', '2022-08-19T00:00:00'])
 
