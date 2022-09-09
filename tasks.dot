@@ -26,19 +26,22 @@ subgraph cluster_dev {
   node[shape=none]
 
   subgraph cluster_epic{
-    
+
     label="epic: combined paper account"
     epic[label="" style="invisible"]
 
     // DONE
     node[fontname = "Handlee" shape=note style=filled color=green];
-    
-    reset_dvine_5Pct
-    
+
+    dvine_purge_assurance
+
+    dvine_assurance
+
     // UNDERWAY
     node[fontname = "Handlee" shape=note style=filled color=orange]
 
     plan_how_to_trade_multiple_streaming_bots
+
     dmoon_backtest[
         label=<
         <B><U>dmoon_backtest</U></B>
@@ -48,23 +51,17 @@ subgraph cluster_dev {
         <BR ALIGN="LEFT"/> [ ] profit
         <BR ALIGN="LEFT"/>
         >]
-    
+
+
+
+
     // TODO
     node [fontname = "Handlee" shape=note style=filled color=goldenrod];
     mark_refactor_to_master->update_5Pct_to_master
 
     update_5Pct_to_master->babysit_5Pct_master_deployment
     babysit_5Pct_master_deployment->combined_paper_acct
-    
-    dvine_assurance[
-        label=<
-        <B><U>dvine_assurance</U></B>
-        <BR/>
-        <BR ALIGN="LEFT"/> [x] check 2Pct
-        <BR ALIGN="LEFT"/> [x] check 3Pct
-        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
-        <BR ALIGN="LEFT"/>
-        >]
+
 
     dvine_assurance->mark_refactor_to_master
 
@@ -78,20 +75,11 @@ subgraph cluster_dev {
         >]
 
 
-    
-    
 
-    dvine_purge_assurance[
-        label=<
-        <B><U>dvine_purge_assurance</U></B>
-        <BR/>
-        <BR ALIGN="LEFT"/> [ ] check 2Pct
-        <BR ALIGN="LEFT"/> [ ] check 3Pct
-        <BR ALIGN="LEFT"/> [ ] redeploy 5Pct
-        <BR ALIGN="LEFT"/>
-        >]
 
-    
+
+
+
 
     // TODO
     node [fontname = "Handlee" shape=note style=filled color=goldenrod]
@@ -104,14 +92,11 @@ subgraph cluster_dev {
 
     clean_positions_form_3Pct
 
-    reset_dvine_5Pct->dvine_assurance
-    reset_dvine_5Pct->dvine_purge_assurance
-
     dvine_chart_assurance->mark_refactor_to_master
-    
+
     dmoon_backtest->doon_pos_epxectency
 
-    
+
 
 
   }
@@ -164,4 +149,7 @@ idea->underway[style=invis,] // for layout
 
 
 }
+
+
+
 

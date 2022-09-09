@@ -97,9 +97,25 @@ def _get_purge_args(purge_base, postfix_args=[]):
             purge_positions_cmd + postfix_args ]
     return purge_cmds
 
+def _output_to_file_cmd(command, outfile):
+    #TODO quoting support
+    return ['/bin/bash', '-c', ' '.join([str(x) for x in command + ['>', outfile]] )]
+
 def _get_systemd_cmd(command, bot):
     service_name = bot if isinstance(bot, str) else bot.__name__
     return ['systemctl', command, service_name, '--user']
+
+def _get_tmp_file(bot,filetype):
+    service_name = bot if isinstance(bot, str) else bot.__name__
+    return f"/tmp/dvault.bots.{service_name}.{filetype}"
+
+def _get_write_journal_cmd(bot, options=['-n', 25], logfile=None):
+    if logfile is None:
+        logfile = _get_tmp_file(bot, "log")
+    service_name = bot if isinstance(bot, str) else bot.__name__
+    subcmd = ['journalctl', '-u', service_name, '--user'] + options
+    # could not easily get journalctl out to a file without a redirect, so, wrap with bash commands
+    return _output_to_file_cmd(subcmd, logfile)
 
 def _get_upgrade_cmd(packages, venv_dir=None):
     if isinstance(packages, list):
@@ -243,10 +259,11 @@ dvine_us_equity_5Pct.compute_orders_cmds = [
 class dmoon:
     strat = strats.dmoon
     entry_point_base = ["dmoon"] + strat.default_args + []
-    packages = [ 'dmark', 'dmule', 'dmoon', 'dvault']
+    packages = [ 'dmark', 'dmule', 'dmoon', 'dvault', 'dsquire']
 
 class dmoon_adhoc(dmoon):
     discord_webhook_url = discords.dmoon_adhoc.webhook_url
+    service_name = "dmoon_adhoc"
 
     common_args = ['--universe-name', 'crypto']
     entry_point_base = dmoon.entry_point_base + common_args + [
@@ -268,7 +285,7 @@ class dmoon_adhoc_dev(dmoon_adhoc):
     dev_upgrade_cmds = _get_upgrade_cmd(dmoon.packages)
     prod_upgrade_cmds = [
         _get_upgrade_cmd( dmoon.packages, "~/.dmoon_versions/None" ),
-        _get_systemd_cmd('restart', 'dmoon_adhoc') ]
+        _get_systemd_cmd('restart', dmoon_adhoc.service_name) ]
 
 dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(
         dmoon_adhoc_dev, chart_all_returns, [
@@ -294,4 +311,24 @@ dmoon_adhoc_dev.chart_performance_cmds = _get_chart_cmds(
         dmoon_adhoc_dev, chart_performance, [
             '--universe-name', 'crypto',
             '--from-date', '2022-08-19T00:00:00'])
+
+dmoon_adhoc_dev.tmp_logfile = _get_tmp_file(dmoon_adhoc_dev.service_name, "log")
+dmoon_adhoc_dev.tmp_statusfile = _get_tmp_file(dmoon_adhoc_dev.service_name, "status")
+
+dmoon_adhoc_dev.onfail_cmds = [
+            _get_write_journal_cmd(dmoon_adhoc_dev.service_name),
+            _output_to_file_cmd(
+                 _get_systemd_cmd(
+                     "status", dmoon_adhoc_dev.service_name) + [
+                         '-n0', '|', 'head', '-n6'], dmoon_adhoc_dev.tmp_statusfile ),
+            [ 'dsquire',
+                '--content-file', dmoon_adhoc_dev.tmp_statusfile,
+                '--embed-file', dmoon_adhoc_dev.tmp_logfile,
+                '--discord-webhook-url', dmoon_adhoc_dev.discord_webhook_url ],
+            [ 'mv', dmoon_adhoc_dev.tmp_logfile, dmoon_adhoc_dev.tmp_logfile + ".old" ] ,
+            [ 'mv', dmoon_adhoc_dev.tmp_statusfile, dmoon_adhoc_dev.tmp_statusfile + ".old" ] ]
+
+
+
+
 
