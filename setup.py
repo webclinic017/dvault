@@ -21,5 +21,5 @@ setup(name='dvault',
           },
       install_requires=requirements,
       zip_safe=False,
-      scripts=['venv_launch.sh']
+      scripts=['venv_launch.sh', 'dvault_service_status.sh']
       )
