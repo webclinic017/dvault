@@ -10,7 +10,7 @@ if [ -z "$service_name" ] || [ -z "$content_file" ] || [ -z "$embed_file" ] ; th
     exit 1
 fi
 
-echo "SERVICE_RESULT=$SERVICE_RESULT EXIT_CODE=$EXIT_CODE EXIT_STATUS=$EXIT_STATUS" > $content_file
+echo "# SERVICE_RESULT=$SERVICE_RESULT EXIT_CODE=$EXIT_CODE EXIT_STATUS=$EXIT_STATUS" > $content_file
 systemctl status $service_name --user | head -n6 >> $content_file
-journalctl -u $service_name --user -n 35 > $embed_file
+journalctl -u $service_name --user -n 35 --no-pager --no-hostname > $embed_file
 
