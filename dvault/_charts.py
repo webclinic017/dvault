@@ -75,3 +75,22 @@ class chart_recent_returns:
             '--orders-max-spam', 2,
             '--orders-with-fill-after', 'now' ]
 
+def get_upgrade_cmd(packages, venv_dir=None):
+    if isinstance(packages, list):
+        pdict = {}
+        for cur_package in packages:
+            pdict[cur_package] = None
+        packages = pdict
+
+    upgrade_toks = []
+    for package, version in packages.items():
+        upgrade_toks += \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git@{version}"] \
+            if version else \
+            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
+
+    venv_launch = [] if not venv_dir else \
+            ['venv_launch.sh', path.expandvars(path.expanduser(venv_dir))]
+
+    return venv_launch + ['pip', 'install'] + upgrade_toks + ['--upgrade']
+
