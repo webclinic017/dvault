@@ -6,7 +6,7 @@ from dvault import strats
 from dvault import discords
 from dvault.accounts import (Alpaca,get_alpaca_args)
 from dvault._charts import (get_chart_cmd_series, dmule_chart, chart_all_returns,
-        get_chart_base_args, chart_recent_returns, chart_performance)
+        get_chart_base_args, chart_recent_returns, chart_performance, get_upgrade_cmd)
 
 
 class dvine_us_equity:
