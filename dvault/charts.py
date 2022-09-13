@@ -78,3 +78,9 @@ class dmule_chart_all_strat_returns(chart_all_returns):
                 ],
             discord_webhook_url)
 
+class dmule_chart_upgrade:
+    dev_upgrade_cmds = _get_upgrade_cmd(['dmark','dvault'])
+    prod_upgrade_cmds = _get_upgrade_cmd(
+            ['dmark','dvault'],
+            "~/.dmule_versions/None" )
+
