@@ -105,25 +105,6 @@ def _get_tmp_file(bot,filetype):
     service_name = bot if isinstance(bot, str) else bot.__name__
     return f"/tmp/dvault.bots.{service_name}.{filetype}"
 
-def _get_upgrade_cmd(packages, venv_dir=None):
-    if isinstance(packages, list):
-        pdict = {}
-        for cur_package in packages:
-            pdict[cur_package] = None
-        packages = pdict
-
-    upgrade_toks = []
-    for package, version in packages.items():
-        upgrade_toks += \
-            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git@{version}"] \
-            if version else \
-            [f"git+ssh://git@github.com/AlwaysTraining/{package}.git"]
-
-    venv_launch = [] if not venv_dir else \
-            ['venv_launch.sh', path.expandvars(path.expanduser(venv_dir))]
-
-    return venv_launch + ['pip', 'install'] + upgrade_toks + ['--upgrade']
-
 
 
 
@@ -148,9 +129,9 @@ class dvine_us_equity_3Pct(dvine_us_equity):
             '--chart-type', 'orders'
             ] + alpaca_args + from_date_args
 
-    dev_upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
-    prod_upgrade_cmds = _get_upgrade_cmd(
+    prod_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None},
             "~/.dvine_versions/v2.2" )
 
@@ -182,9 +163,9 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_2Pct'])
 
-    dev_upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
-    prod_upgrade_cmds = _get_upgrade_cmd(
+    prod_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None},
             "~/.dvine_versions/v2.2" )
 
@@ -218,9 +199,9 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             '--bot-name', 'dvine_us_equity_5Pct'])
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
-    dev_upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"mark_refactor", 'dvault': None} )
-    prod_upgrade_cmds = _get_upgrade_cmd(
+    prod_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"mark_refactor", 'dvault': None},
             "~/.dvine_versions/mark_refactor" )
 
@@ -270,9 +251,9 @@ class dmoon_adhoc_dev(dmoon_adhoc):
             '--entry-signal-look-back-periods', 30,
             '--exit-signal-look-back-periods', 2 ]
 
-    dev_upgrade_cmds = _get_upgrade_cmd(dmoon.packages)
+    dev_upgrade_cmds = get_upgrade_cmd(dmoon.packages)
     prod_upgrade_cmds = [
-        _get_upgrade_cmd( dmoon.packages, "~/.dmoon_versions/None" ),
+        get_upgrade_cmd( dmoon.packages, "~/.dmoon_versions/None" ),
         _get_systemd_cmd('restart', dmoon_adhoc.service_name) ]
 
 dmoon_adhoc_dev.chart_all_returns_cmds = _get_chart_cmds(

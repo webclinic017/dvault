@@ -9,7 +9,7 @@ from datetime import datetime
 from dvault.accounts import (Alpaca, get_alpaca_data_args, get_alpaca_args)
 from dvault._charts import (
         get_chart_cmd_series, chart_all_returns,
-        dmule_chart, get_chart_base_args, get_chart_tmp_args)
+        dmule_chart, get_chart_base_args, get_chart_tmp_args, get_upgrade_cmd)
 from dvault.discords import (dstock_dspam)
 
 class dmule_chart_all_tikr_returns(chart_all_returns):
@@ -79,8 +79,8 @@ class dmule_chart_all_strat_returns(chart_all_returns):
             discord_webhook_url)
 
 class dmule_chart_upgrade:
-    dev_upgrade_cmds = _get_upgrade_cmd(['dmark','dvault'])
-    prod_upgrade_cmds = _get_upgrade_cmd(
+    dev_upgrade_cmds = get_upgrade_cmd(['dmark','dvault'])
+    prod_upgrade_cmds = get_upgrade_cmd(
             ['dmark','dvault'],
             "~/.dmule_versions/None" )
 
