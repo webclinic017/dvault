@@ -54,6 +54,17 @@ subgraph cluster_dev {
 
 
 
+    dvine_chart_assurance[
+        label=<
+        <B><U>dvine_chart_assurance</U></B>
+        <BR/>
+        <BR ALIGN="LEFT"/> [ ] check Pct5 discord reporting
+        <BR ALIGN="LEFT"/> [ ] check all from dates correct
+        <BR ALIGN="LEFT"/>
+        >]
+
+
+
 
     // TODO
     node [fontname = "Handlee" shape=note style=filled color=goldenrod];
@@ -65,15 +76,9 @@ subgraph cluster_dev {
 
     dvine_assurance->mark_refactor_to_master
 
-    dvine_chart_assurance[
-        label=<
-        <B><U>dvine_chart_assurance</U></B>
-        <BR/>
-        <BR ALIGN="LEFT"/> [ ] check discord channels
-        <BR ALIGN="LEFT"/> [ ] check for journalctl exceptions
-        <BR ALIGN="LEFT"/>
-        >]
-
+    dvine_purge_alpaca_call_caching
+    // bug report from log:
+    // Sep 15 15:47:10 the-rain-maker dvine_purge_us_equity_5Pct[2778868]: W:sleep 3 seconds and retrying https://paper-api.alpaca.markets/v2/calendar 3 more time(s)...
 
 
 
@@ -149,6 +154,7 @@ idea->underway[style=invis,] // for layout
 
 
 }
+
 
 
 
