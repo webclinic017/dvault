@@ -8,6 +8,22 @@ from dvault.accounts import (Alpaca,get_alpaca_args)
 from dvault._charts import (get_chart_cmd_series, dmule_chart, chart_all_returns,
         get_chart_base_args, chart_recent_returns, chart_performance, get_upgrade_cmd)
 
+def _get_onfail_cmds(bot):
+
+    bot.tmp_logfile = _get_tmp_file(bot.service_name, "log")
+    bot.tmp_statusfile = _get_tmp_file(bot.service_name, "status")
+
+    return [
+        [ "dvault_service_status.sh",
+            bot.service_name,
+            bot.tmp_statusfile,
+            bot.tmp_logfile ],
+        [ 'dsquire',
+            '--content-file', bot.tmp_statusfile,
+            '--embed-file', bot.tmp_logfile,
+            '--discord-webhook-url', bot.discord_webhook_url ],
+        [ 'mv', bot.tmp_logfile, bot.tmp_logfile + ".old" ] ,
+        [ 'mv', bot.tmp_statusfile, bot.tmp_statusfile + ".old" ] ]
 
 class dvine_us_equity:
     strat = strats.dvine
@@ -111,6 +127,7 @@ def _get_tmp_file(bot,filetype):
 class dvine_us_equity_3Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_3Pct
     alpaca_args = get_alpaca_args(account)
+    service_name = 'dvine_us_equity_2Pct'
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.03,
             '--bot-name', 'dvine_us_equity_3Pct' ]
@@ -123,8 +140,9 @@ class dvine_us_equity_3Pct(dvine_us_equity):
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_3Pct'])
+    discord_webhook_url = discords.dvine_3pct.webhook_url
 
-    from_date_args = ['--from-date', '2022-06-08T00:00:00']
+    from_date_args = ['--from-date', '2022-09-07T00:00:00']
     orders_table_cmd = ['dmule_table',
             '--chart-type', 'orders'
             ] + alpaca_args + from_date_args
@@ -146,10 +164,13 @@ dvine_us_equity_3Pct.compute_orders_cmds = [
         dvine_us_equity_3Pct.first_base + _DVINE_DAYS[0]] + [
         dvine_us_equity_3Pct.rest_base  +  x for x in _DVINE_DAYS[1:36] ]
 
+dvine_us_equity_3Pct.onfail_cmds = _get_onfail_cmds(dvine_us_equity_3Pct)
+
 
 class dvine_us_equity_2Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_2Pct
     alpaca_args = get_alpaca_args(account)
+    service_name = 'dvine_us_equity_2Pct'
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.0249,
             '--strategy-bet-size-usd', 500.00,
@@ -162,6 +183,7 @@ class dvine_us_equity_2Pct(dvine_us_equity):
     purge_base = ['dvine_purge'] + dvine_us_equity.strat.base_args + alpaca_args
     purge_cmds = _get_purge_args(purge_base,
             ['--bot-name', 'dvine_us_equity_2Pct'])
+    discord_webhook_url = discords.dvine_2pct.webhook_url
 
     dev_upgrade_cmds = get_upgrade_cmd(
             {'dmark':None, 'dvine':"v2.2", 'dvault': None} )
@@ -171,6 +193,8 @@ class dvine_us_equity_2Pct(dvine_us_equity):
 
 dvine_us_equity_2Pct.compute_orders_cmds = [
         dvine_us_equity_2Pct.rest_base  +  x for x in _DVINE_DAYS[14:30] ]
+
+dvine_us_equity_2Pct.onfail_cmds = _get_onfail_cmds(dvine_us_equity_2Pct)
 
 
 def _get_chart_cmds(bot, chart, custom=[]):
@@ -182,9 +206,11 @@ def _get_chart_cmds(bot, chart, custom=[]):
                 bot, bot.strat) + custom,
             bot.discord_webhook_url)
 
+
 class dvine_us_equity_5Pct(dvine_us_equity):
     account = Alpaca.dvine_us_equity_5Pct
     alpaca_args = get_alpaca_args(account)
+    service_name = "dvine_us_equity_5Pct"
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
             '--nstd-thresh', 0.05,
             '--strategy-bet-size-usd', 100.00,
@@ -205,24 +231,24 @@ class dvine_us_equity_5Pct(dvine_us_equity):
             {'dmark':None, 'dvine':"mark_refactor", 'dvault': None},
             "~/.dvine_versions/mark_refactor" )
 
+    chart_extra_args = [
+            '--orders-series', 'param',
+            '--from-date', '2022-09-01T00:00:00']
+
 
 dvine_us_equity_5Pct.chart_all_returns_cmds = _get_chart_cmds(
-        dvine_us_equity_5Pct, chart_all_returns, [
-            '--orders-series', 'param',
-            '--from-date', '2022-08-19T00:00:00'])
+        dvine_us_equity_5Pct, chart_all_returns, dvine_us_equity_5Pct.chart_extra_args)
 
 dvine_us_equity_5Pct.chart_recent_returns_cmds = _get_chart_cmds(
-        dvine_us_equity_5Pct, chart_recent_returns, [
-            '--orders-series', 'param',
-            '--from-date', '2022-08-19T00:00:00'])
+        dvine_us_equity_5Pct, chart_recent_returns, dvine_us_equity_5Pct.chart_extra_args)
 
 dvine_us_equity_5Pct.chart_performance_cmds = _get_chart_cmds(
-        dvine_us_equity_5Pct, chart_performance, [
-            '--orders-series', 'param',
-            '--from-date', '2022-08-19T00:00:00'])
+        dvine_us_equity_5Pct, chart_performance, dvine_us_equity_5Pct.chart_extra_args)
 
 dvine_us_equity_5Pct.compute_orders_cmds = [
         dvine_us_equity_5Pct.rest_base  +  x for x in _DVINE_DAYS[31:] ]
+
+dvine_us_equity_5Pct.onfail_cmds = _get_onfail_cmds(dvine_us_equity_5Pct)
 
 
 class dmoon:
@@ -281,20 +307,7 @@ dmoon_adhoc_dev.chart_performance_cmds = _get_chart_cmds(
             '--universe-name', 'crypto',
             '--from-date', '2022-08-19T00:00:00'])
 
-dmoon_adhoc_dev.tmp_logfile = _get_tmp_file(dmoon_adhoc_dev.service_name, "log")
-dmoon_adhoc_dev.tmp_statusfile = _get_tmp_file(dmoon_adhoc_dev.service_name, "status")
-
-dmoon_adhoc_dev.onfail_cmds = [
-        [ "dvault_service_status.sh",
-            dmoon_adhoc_dev.service_name,
-            dmoon_adhoc_dev.tmp_statusfile,
-            dmoon_adhoc_dev.tmp_logfile ],
-        [ 'dsquire',
-            '--content-file', dmoon_adhoc_dev.tmp_statusfile,
-            '--embed-file', dmoon_adhoc_dev.tmp_logfile,
-            '--discord-webhook-url', dmoon_adhoc_dev.discord_webhook_url ],
-        [ 'mv', dmoon_adhoc_dev.tmp_logfile, dmoon_adhoc_dev.tmp_logfile + ".old" ] ,
-        [ 'mv', dmoon_adhoc_dev.tmp_statusfile, dmoon_adhoc_dev.tmp_statusfile + ".old" ] ]
+dmoon_adhoc_dev.onfail_cmds = _get_onfail_cmds(dmoon_adhoc_dev)
 
 
 
