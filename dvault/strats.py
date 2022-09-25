@@ -18,6 +18,6 @@ class dmoon:
     default_args = base_args + [
             "--universe-name", "unittest_universe",
             "--alpaca-data-url", "https://stream.data.alpaca.markets",
-            '--min-num-prices-per-ber', 10
+            '--min-num-prices-per-bar', 10
             ]
 
