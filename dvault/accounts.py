@@ -44,6 +44,13 @@ class Alpaca:
         api_secret_key = "OATplWoidbTHrrn9HXAprWCcOXgT7QQoEyJakNrJ"
         base_url = "https://paper-api.alpaca.markets"
 
+    class dmark_herd:
+        email = "derrick.karimi+dmark_herd@gmail.com"
+        api_key = "PK24HJQ1LOLKR0UT2805"
+        api_secret_key = "r68H6sMJzXG4GvHuklYdUPakzI42kZCotSj6oyFz"
+        base_url = "https://paper-api.alpaca.markets"
+
+
 def get_alpaca_args(account):
     return [ '--alpaca-base-url', account.base_url,
              '--alpaca-api-key', account.api_key,
