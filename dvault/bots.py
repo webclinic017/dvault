@@ -208,7 +208,7 @@ def _get_chart_cmds(bot, chart, custom=[]):
 
 
 class dvine_us_equity_5Pct(dvine_us_equity):
-    account = Alpaca.dvine_us_equity_5Pct
+    account = Alpaca.dmark_herd
     alpaca_args = get_alpaca_args(account)
     service_name = "dvine_us_equity_5Pct"
     entry_point_base = dvine_us_equity.entry_point_base + alpaca_args + [
@@ -267,7 +267,7 @@ class dmoon_adhoc(dmoon):
     entry_point = entry_point_base
 
 class dmoon_adhoc_dev(dmoon_adhoc):
-    account = Alpaca.play_time
+    account = Alpaca.dmark_herd
     alpaca_args = get_alpaca_args(account)
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 1,
