@@ -226,10 +226,10 @@ class dvine_us_equity_5Pct(dvine_us_equity):
     discord_webhook_url = discords.dvine_5pct.webhook_url
 
     dev_upgrade_cmds = get_upgrade_cmd(
-            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None} )
+            {'dmark':None, 'dvine':None, 'dvault': None} )
     prod_upgrade_cmds = get_upgrade_cmd(
-            {'dmark':None, 'dvine':"mark_refactor", 'dvault': None},
-            "~/.dvine_versions/mark_refactor" )
+            {'dmark':None, 'dvine':None, 'dvault': None},
+            "~/.dvine_versions/None" )
 
     chart_extra_args = [
             '--orders-series', 'param',
