@@ -272,10 +272,10 @@ class dmoon_adhoc_dev(dmoon_adhoc):
     entry_point = dmoon_adhoc.entry_point_base + alpaca_args + [
             '--period-span-value', 1,
             '--period-span-units', 'Min',
-            '--bot-name', 'dmoon_adhoc_dev',
+            '--bot-name', 'dmoon_39x17x1Min',
             '--strategy-bet-size-usd', 50000,
-            '--entry-signal-look-back-periods', 30,
-            '--exit-signal-look-back-periods', 2 ]
+            '--entry-signal-look-back-periods', 39,
+            '--exit-signal-look-back-periods', 17 ]
 
     dev_upgrade_cmds = get_upgrade_cmd(dmoon.packages)
     prod_upgrade_cmds = [
